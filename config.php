@@ -1,6 +1,6 @@
 <?php
     define('DB_USERNAME', 'root');
-    define('DB_PASSWORD', '123456789'); // 123456789，設自己的
+    define('DB_PASSWORD', 'ubin890914'); // 123456789，設自己的
 
     date_default_timezone_set('Asia/Taipei');
 
