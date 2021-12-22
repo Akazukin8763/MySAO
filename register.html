@@ -27,6 +27,13 @@
                 background: -webkit-linear-gradient(270deg, rgba(16, 46, 102, 0.9)0%, rgba(135, 220, 233, 0.8)100%);
                 background: -o-linear-gradient(270deg, rgba(16, 46, 102, 0.9)0%, rgba(135, 220, 233, 0.8)100%);
             }
+            .modal-header {
+                color: #EEEEEE;
+                font-weight: bold;
+            }
+            .modal-body {
+                color: #EEEEEE;
+            }
             .modal.fade .modal-dialog {
                 -webkit-transition: -webkit-transform 0.6s ease-out;
                 -moz-transition: moz-transform 0.6s ease-out;
@@ -45,6 +52,8 @@
 
             window.addEventListener("load", function(event) {
                 $("#register").modal("show");
+                //$("#registerHealthTest").modal("show");
+                //$("#registerAttackTest").modal("show");
             });
 
             // Username Input
@@ -66,6 +75,9 @@
                 return true;
             }
 
+            /*
+            Register Username
+            */
             // Back Button
             $("#registerBack").click(function() {
                 history.go(-1);
@@ -77,8 +89,22 @@
 
                 if (usernameCheck(name)) {
                     $("#register").modal("hide");
-                    $("#registerHealthTest").modal("show");
+                    //$("#registerHealthTest").modal("show");
+                    $("#registerAttackTest").modal("show");
                 }
+            });
+
+            /*
+            Health Test
+            */
+
+            /*
+            Attack Test
+            */
+            // https://www.youtube.com/watch?v=h8mqCy-KK0Y
+            import * as attack from "./js/register/attackTest.js";
+            $("#attackStart").click(function() {
+                attack.start();
             });
         </script>
     </head>
@@ -90,12 +116,12 @@
                     <div class="modal-content header-gradient">
                         <!-- Register Header -->
                         <div class="modal-header d-flex justify-content-center">
-                            <span class="modal-title" style="color: #EEEEEE; font-weight: bold;">Create Character</span>
+                            <span class="modal-title">Create Character</span>
                         </div>
                         <!-- Register Body -->
                         <div class="modal-body">
                             <div class="row">
-                                <label class="col form-label" required="required" style="color: #EEEEEE;">Enter your <span style="color:rgba(1, 7, 19, 0.9)">Character</span> Name</label>
+                                <label class="col form-label" required="required">Enter your <span style="color:rgba(1, 7, 19, 0.9)">Character</span> Name</label>
                                 <label class="col d-flex justify-content-end" id="registerUsernameERR" style="color: rgb(235, 17, 17);"></label>
                             </div>
                             <input type="text" class="form-control" id="registerUsername"></input>
@@ -115,13 +141,43 @@
                     <div class="modal-content header-gradient">
                         <!-- Register Header -->
                         <div class="modal-header d-flex justify-content-center">
-                            <span class="modal-title" style="color: #EEEEEE; font-weight: bold;">Health Testing</span>
+                            <span class="modal-title">Health Testing</span>
                         </div>
                         <!-- Register Body -->
                         <div class="modal-body">
+                            <div id="healthTest">
+                                Content：<br>
+                                IDK
+                            </div>
                         </div>
                         <!-- Register Footer -->
-                        <div class="modal-footer">
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="button" class="btn btn-outline-light" id="healthStart">Start</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attack Test -->
+            <div class="modal fade" id="registerAttackTest" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="registerHealthTest" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content header-gradient">
+                        <!-- Register Header -->
+                        <div class="modal-header d-flex justify-content-center">
+                            <span class="modal-title">Attack Testing</span>
+                        </div>
+                        <!-- Register Body -->
+                        <div class="modal-body">
+                            <div class="row" id="attackTest">
+                                Test Content：<br>
+                                1. To start the test, hit the 'Start' button below the modal.<br>
+                                2. After clicking the button, clicking with your mouse in the frame as fast as you can in the given timeframe.<br>
+                                3. Once the time runs out, the final score will be presented. The score is shown with attack ability.
+                            </div>
+                        </div>
+                        <!-- Register Footer -->
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="button" class="btn btn-outline-light" id="attackStart">Start</button>
                         </div>
                     </div>
                 </div>
