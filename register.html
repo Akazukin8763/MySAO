@@ -27,18 +27,65 @@
                 background: -webkit-linear-gradient(270deg, rgba(16, 46, 102, 0.9)0%, rgba(135, 220, 233, 0.8)100%);
                 background: -o-linear-gradient(270deg, rgba(16, 46, 102, 0.9)0%, rgba(135, 220, 233, 0.8)100%);
             }
+            .modal.fade .modal-dialog {
+                -webkit-transition: -webkit-transform 0.6s ease-out;
+                -moz-transition: moz-transform 0.6s ease-out;
+                -ms-transition: -ms-transform 0.6s ease-out;
+                -o-transition: -o-transform 0.6s ease-out;
+                transition: transform 0.6s ease-out;
+            }
+            .form-control:focus {
+                border-color: rgba(135, 220, 233, 0.95);
+                box-shadow: 0 0 0 0.2rem rgba(16, 46, 102, 0.25);
+            }
         </style>
 
-        <script>
+        <script type="module">
+            var name;
+
             window.addEventListener("load", function(event) {
-                new bootstrap.Modal($("#registerUsername")).show();
+                $("#register").modal("show");
+            });
+
+            // Username Input
+            $("#registerUsername").on("change keyup paste", function () {
+                usernameCheck($("#registerUsername").val());
+            });
+            function usernameCheck(name) {
+                if (name.length == 0) {
+                    $("#registerUsernameERR").html("Can not be empty.");
+                    $("#registerUsername").focus();
+                    return false;
+                }
+                else if (name.length > 32) {
+                    $("#registerUsernameERR").html("Can not exceed 32-bit word.");
+                    $("#registerUsername").focus();
+                    return false;
+                }
+                $("#registerUsernameERR").html("");
+                return true;
+            }
+
+            // Back Button
+            $("#registerBack").click(function() {
+                history.go(-1);
+            });
+
+            // Next Button
+            $("#registerNext").click(function() {
+                name = $("#registerUsername").val();
+
+                if (usernameCheck(name)) {
+                    $("#register").modal("hide");
+                    $("#registerHealthTest").modal("show");
+                }
             });
         </script>
     </head>
     <body >
         <div class="d-flex justify-content-center align-items-center Aincrad">
-            <!-- Modal -->
-            <div class="modal fade" id="registerUsername" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <!-- Modal Username -->
+            <div class="modal fade" id="register" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="register" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content header-gradient">
                         <!-- Register Header -->
@@ -47,13 +94,34 @@
                         </div>
                         <!-- Register Body -->
                         <div class="modal-body">
-                            <label class="form-label" required="required" style="color: #EEEEEE;">Enter your <span style="color:rgba(1, 7, 19, 0.9)">Character</span> Name</label>
+                            <div class="row">
+                                <label class="col form-label" required="required" style="color: #EEEEEE;">Enter your <span style="color:rgba(1, 7, 19, 0.9)">Character</span> Name</label>
+                                <label class="col d-flex justify-content-end" id="registerUsernameERR" style="color: rgb(235, 17, 17);"></label>
+                            </div>
                             <input type="text" class="form-control" id="registerUsername"></input>
                         </div>
                         <!-- Register Footer -->
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" style="float: left !important;">&lt; Back</button>
-                            <button type="button" class="btn btn-primary">Next &gt;</button>
+                            <button type="button" class="btn btn-outline-danger" id="registerBack">&lt; Back</button>
+                            <button type="button" class="btn btn-outline-primary" id="registerNext">Next &gt;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Health Test -->
+            <div class="modal fade" id="registerHealthTest" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="registerHealthTest" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content header-gradient">
+                        <!-- Register Header -->
+                        <div class="modal-header d-flex justify-content-center">
+                            <span class="modal-title" style="color: #EEEEEE; font-weight: bold;">Health Testing</span>
+                        </div>
+                        <!-- Register Body -->
+                        <div class="modal-body">
+                        </div>
+                        <!-- Register Footer -->
+                        <div class="modal-footer">
                         </div>
                     </div>
                 </div>
