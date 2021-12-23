@@ -2,7 +2,7 @@
 
     抓ability:
 
-輸入ID
+輸入ID;
 回傳message類與ability類
 若查詢不到會在message.statement顯示訊息
 
