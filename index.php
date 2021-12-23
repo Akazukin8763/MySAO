@@ -41,6 +41,9 @@
             $("#_insertRole_btn").click(function() {
                 var _id = $("#_id").val();
                 var _name = $("#_name").val();
+                var _description =  $("#_description").val();
+                var _levels =  $("#_levels").val();
+                var _guild_ID =  $("#_guild_ID").val();
                 var _health = $("#_health").val();
                 var _attack = $("#_attack").val();
                 var _defense = $("#_defense").val();
@@ -52,13 +55,16 @@
                     url: "API/insertRole.php",
                     dataType: "json",
                     data: {
-                        _id: _id,
-                        _name: _name,
-                        _health: _health,
-                        _attack: _attack,
-                        _defense: _defense,
-                        _reaction: _reaction,
-                        _agile: _agile
+                        id: _id,
+                        name: _name,
+                        description: _description,
+                        levels: _levels,
+                        guild_ID: _guild_ID,
+                        health: _health,
+                        attack: _attack,
+                        defense: _defense,
+                        reaction: _reaction,
+                        agile: _agile
                     },
                     success: function(response) {
                         if (response.result) {
@@ -84,6 +90,12 @@
             <input type="text" id="_id" name="_id"><br><br>
             <label for="_name">name: </label>
             <input type="text" id="_name" name="_name"><br><br>
+            <label for="_name">description: </label>
+            <input type="text" id="_description" name="_description"><br><br>
+            <label for="_name">levels: </label>
+            <input type="text" id="_levels" name="_levels"><br><br>
+            <label for="_name">guild_ID: </label>
+            <input type="text" id="_guild_ID" name="_guild_ID"><br><br>
             <label for="_health">health: </label>
             <input type="text" id="_health" name="_health"><br><br>
             <label for="_attack">attack: </label>
