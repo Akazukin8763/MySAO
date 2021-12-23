@@ -1,3 +1,5 @@
+import { showGraph } from "../ability/showGraph.js";
+
 export function start() {
     var testing = $("#attackTest");
     testing.empty();
@@ -25,8 +27,8 @@ export function start() {
             countdown.fadeOut(2000);
             setInterval(function() { countdown.html(""); clearInterval() }, 2000);
 
-            $("#attackVideo").prop("volume", 0.1);
-            $("#attackVideo").trigger("play");
+            video.prop("volume", 0.1);
+            video.trigger("play");
         }
     }, 1000);
 
@@ -50,6 +52,17 @@ export function start() {
         var score = 0;
         testing.click(function() {
             combo.html("Combo：" + ++score);
+        });
+
+        // Timer
+        video.on("ended", function() {
+            testing.empty();
+
+            // Ability Result
+            var chart = $('<canvas></canvas>');
+            chart.appendTo(testing);
+
+            showGraph(chart, score, 0, 0, 0, 0);
         });
 
         // Bonus
