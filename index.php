@@ -39,7 +39,7 @@
                 })
             })*/
             
-            $("#_insertRole_btn").click(function() {
+            $("#_assignPlayer_btn").click(function() {
                 var _name = $("#_name").val();/*
                 var _description =  $("#_description").val();
                 var _levels =  $("#_levels").val();
@@ -71,10 +71,30 @@
                     }
                 })
             })
+
+            $("#_getAbility_btn").click(function() {
+                var _id = $("#_id").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "API/getAbility.php",
+                    dataType: "json",
+                    data: {
+                        id: _id
+                    },
+                    success: function(response) {
+                        console.log(response.ability);
+                        console.log(response.message);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
         </script>
     </head>
     <body>
-        <h1>Assign a player</h1><br>
+        <h1>Assign a player</h1>
         <!--<button type="button" class="btn btn-primary" id="_test_btn">SHOW IN CONSOLE</button><br><br>-->
         <form>
             <label for="_name">name: </label>
@@ -98,6 +118,10 @@
             <input type="text" id="_agile" name="_agile"><br><br>
             <input type="submit" id="_submit" value="Submit">-->
         </form>
-        <button type="button" class="btn btn-primary" id="_insertRole_btn">Assign</button><br><br>
+        <button type="button" class="btn btn-primary" id="_assignPlayer_btn">Assign</button><br><br>
+        <h1>Get ability</h1>
+        <label for="_id">ID: </label>
+        <input type="text" id="_id" name="_id"><br>
+        <button type="button" class="btn btn-primary" id="_getAbility_btn">Get</button><br><br>
     </body>
 </html>
