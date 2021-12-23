@@ -12,6 +12,7 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="module">
+            /*
             $("#_test_btn").click(function() {
                 var __name = "桐谷和人";
 
@@ -36,7 +37,7 @@
                         console.log(jqXHR);
                     }
                 })
-            })
+            })*/
             
             $("#_insertRole_btn").click(function() {
                 var _id = $("#_id").val();
@@ -52,7 +53,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "API/insertRole.php",
+                    url: "API/assignPlayer.php",
                     dataType: "json",
                     data: {
                         id: _id,
@@ -67,13 +68,8 @@
                         agile: _agile
                     },
                     success: function(response) {
-                        if (response.result) {
-                            console.log(response.result);
-                            console.log(response.result[0].ds);
-                        }
-                        else {
-                            console.log(response.errorMsg);
-                        }
+                        console.log(response.ID);
+                        console.log(response.message);
                     },
                     error: function(jqXHR) {
                         console.log(jqXHR);
@@ -83,13 +79,12 @@
         </script>
     </head>
     <body>
-        <h5>test</h5>
-        <button type="button" class="btn btn-primary" id="_test_btn">SHOW IN CONSOLE</button><br><br>
+        <h1>Assign a player</h1><br>
+        <!--<button type="button" class="btn btn-primary" id="_test_btn">SHOW IN CONSOLE</button><br><br>-->
         <form>
-            <label for="_id">ID: </label>
-            <input type="text" id="_id" name="_id"><br><br>
             <label for="_name">name: </label>
-            <input type="text" id="_name" name="_name"><br><br>
+            <input type="text" id="_name" name="_name"><br>
+            <!--
             <label for="_name">description: </label>
             <input type="text" id="_description" name="_description"><br><br>
             <label for="_name">levels: </label>
@@ -106,8 +101,8 @@
             <input type="text" id="_reaction" name="_reaction"><br><br>
             <label for="_agile">agile: </label>
             <input type="text" id="_agile" name="_agile"><br><br>
-            <input type="submit" id="_submit" value="Submit">
+            <input type="submit" id="_submit" value="Submit">-->
         </form>
-        <button type="button" class="btn btn-primary" id="_insertRole_btn">Insert the role</button><br><br>
+        <button type="button" class="btn btn-primary" id="_insertRole_btn">Assign</button><br><br>
     </body>
 </html>
