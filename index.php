@@ -40,8 +40,7 @@
             })*/
             
             $("#_insertRole_btn").click(function() {
-                var _id = $("#_id").val();
-                var _name = $("#_name").val();
+                var _name = $("#_name").val();/*
                 var _description =  $("#_description").val();
                 var _levels =  $("#_levels").val();
                 var _guild_ID =  $("#_guild_ID").val();
@@ -49,23 +48,19 @@
                 var _attack = $("#_attack").val();
                 var _defense = $("#_defense").val();
                 var _reaction = $("#_reaction").val();
-                var _agile = $("#_agile").val();
+                var _agile = $("#_agile").val();*/
 
                 $.ajax({
                     type: "POST",
                     url: "API/assignPlayer.php",
                     dataType: "json",
                     data: {
-                        id: _id,
-                        name: _name,
-                        description: _description,
-                        levels: _levels,
-                        guild_ID: _guild_ID,
+                        name: _name/*,
                         health: _health,
                         attack: _attack,
                         defense: _defense,
                         reaction: _reaction,
-                        agile: _agile
+                        agile: _agile*/
                     },
                     success: function(response) {
                         console.log(response.ID);
