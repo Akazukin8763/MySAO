@@ -34,7 +34,7 @@ export function start() {
 
     // Result
     var combo = $('<label id="attackScore"></label>');
-    var next = $('<button type="button" class="btn btn-outline-light" id="attackStart"></button>');
+    var next = $('<button type="button" class="btn btn-outline-light" id="attackNext"></button>');
 
     var result = $("#attackResult");
     result.empty();
@@ -43,12 +43,19 @@ export function start() {
     countdown.appendTo(result);
     next.html("Next >").appendTo(result);
 
+    next.prop("disabled", true);
+    next.click(function() {
+        $("#registerAttackTest").modal("hide");
+        $("#registerHealthTest").modal("show");
+    });
+
     result.removeClass("justify-content-center");
     result.addClass("justify-content-between");
 
     // Func
     function setGame() {
         // Set Game
+        
         var score = 0;
         testing.click(function() {
             combo.html("Combo：" + ++score);
@@ -57,12 +64,15 @@ export function start() {
         // Timer
         video.on("ended", function() {
             testing.empty();
-
+            
             // Ability Result
             var chart = $('<canvas></canvas>');
             chart.appendTo(testing);
 
             showGraph(chart, score, 0, 0, 0, 0);
+
+            next.prop("disabled", false);
+            testing.off("click");
         });
 
         // Bonus
