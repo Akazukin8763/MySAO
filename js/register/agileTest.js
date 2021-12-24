@@ -23,7 +23,6 @@ export function start() {
     
     table.appendTo(testing);
     //$('<div class="progress" style="height: 5px;"><div class="progress-bar w-100" role="progressbar"></div></div>').appendTo(testing);
-
     
     // Countdown
     var countdown = $('<span class="d-flex justify-content-center">Ready?</span>');
@@ -119,7 +118,7 @@ export function start() {
         }
 
         // Timer
-        var sec = 15; // 15 sec
+        var sec = 16; // 16 sec
         setTimeout(function() {
             testing.empty();
             

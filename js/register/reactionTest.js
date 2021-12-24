@@ -46,7 +46,7 @@ export function start() {
     next.prop("disabled", true);
     next.click(function() {
         $("#registerReactionTest").modal("hide");
-        //$("#registerHealthTest").modal("show");
+        $("#registerAgileTest").modal("show");
     });
 
     result.removeClass("justify-content-center");
@@ -81,7 +81,7 @@ export function start() {
             const attack = $("#abilityAttack").val();
             const health = $("#abilityHealth").val();
             const defense = $("#abilityDefense").val();
-            const reaction = score > 0 ? parseInt(10 / score) : 0;
+            const reaction = (score > 0 ? parseInt(10 / score) : 0) + 10;
             const agile = $("#abilityAgile").val();
             showGraph(chart, attack, health, defense, reaction, agile);
             $("#abilityReaction").val(reaction);

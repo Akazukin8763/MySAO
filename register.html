@@ -55,12 +55,12 @@
             var name;
 
             window.addEventListener("load", function(event) {
-                //$("#register").modal("show");
+                $("#register").modal("show");
                 //$("#registerAttackTest").modal("show");
                 //$("#registerHealthTest").modal("show");
                 //$("#registerDefenseTest").modal("show");
                 //$("#registerReactionTest").modal("show");
-                $("#registerAgileTest").modal("show");
+                //$("#registerAgileTest").modal("show");
             });
 
             // Username Input
@@ -120,6 +120,10 @@
             /*
             Defense Test
             */
+            import * as defense from "./js/register/defenseTest.js";
+            $("#defenseStart").click(function() {
+                defense.start();
+            })
 
             /*
             Reaction Test
@@ -202,8 +206,10 @@
                         <!-- Health Body -->
                         <div class="modal-body">
                             <div class="row" id="healthTest">
+                                <!--
                                 Test Content：<br>
                                 IDK
+                                -->
                             </div>
                         </div>
                         <!-- Health Footer -->
@@ -226,8 +232,10 @@
                         <!-- Defense Body -->
                         <div class="modal-body">
                             <div class="row" id="defenseTest">
+                                <!--
                                 Test Content：<br>
                                 IDK
+                                -->
                             </div>
                         </div>
                         <!-- Defense Footer -->
@@ -281,7 +289,7 @@
                                 1. To start the test, hit the 'Start' button below the modal.<br>
                                 2. After clicking the button, 3 Tier-S Ingredients will come out.<br>
                                 3. You need to catch them by clicking it, and the other Tier-S Ingredients will comes out to keep there is 3 Tier-S Ingredients on the screen.<br>
-                                4. The final score will be presented after 15 sec, the score is shown with agile ability.<br>
+                                4. The final score will be presented after 16 sec, the score is shown with agile ability.<br>
                                 5. If you hit the screen before it comes out, your score will deduct.
                             </div>
                         </div>
