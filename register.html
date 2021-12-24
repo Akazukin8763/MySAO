@@ -58,7 +58,9 @@
                 //$("#register").modal("show");
                 //$("#registerAttackTest").modal("show");
                 //$("#registerHealthTest").modal("show");
-                $("#registerReactionTest").modal("show");
+                //$("#registerDefenseTest").modal("show");
+                //$("#registerReactionTest").modal("show");
+                $("#registerAgileTest").modal("show");
             });
 
             // Username Input
@@ -130,6 +132,10 @@
             /*
             Agile Test
             */
+            import * as agile from "./js/register/agileTest.js";
+            $("#agileStart").click(function() {
+                agile.start();
+            })
         </script>
     </head>
     <body >
@@ -182,6 +188,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="text" value="0" id="abilityAttack" style="display: none;"></input> <!-- Save Attack -->
             </div>
 
             <!-- Health Test -->
@@ -205,6 +212,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="text" value="0" id="abilityHealth" style="display: none;"></input> <!-- Save Health -->
             </div>
 
             <!-- Defense Test -->
@@ -223,11 +231,12 @@
                             </div>
                         </div>
                         <!-- Defense Footer -->
-                        <div class="modal-footer justify-content-center">
+                        <div class="modal-footer justify-content-center" id="defenseResult">
                             <button type="button" class="btn btn-outline-light" id="defenseStart">Start</button>
                         </div>
                     </div>
                 </div>
+                <input type="text" value="0" id="abilityDefense" style="display: none;"></input> <!-- Save Defense -->
             </div>
 
             <!-- Reaction Test -->
@@ -254,6 +263,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="text" value="0" id="abilityReaction" style="display: none;"></input> <!-- Save Reaction -->
             </div>
 
             <!-- Agile Test -->
@@ -268,15 +278,20 @@
                         <div class="modal-body">
                             <div class="row" id="agileTest">
                                 Test Content：<br>
-                                IDK
+                                1. To start the test, hit the 'Start' button below the modal.<br>
+                                2. After clicking the button, 3 Tier-S Ingredients will come out.<br>
+                                3. You need to catch them by clicking it, and the other Tier-S Ingredients will comes out to keep there is 3 Tier-S Ingredients on the screen.<br>
+                                4. The final score will be presented after 15 sec, the score is shown with agile ability.<br>
+                                5. If you hit the screen before it comes out, your score will deduct.
                             </div>
                         </div>
                         <!-- Agile Footer -->
-                        <div class="modal-footer justify-content-center">
+                        <div class="modal-footer justify-content-center" id="agileResult">
                             <button type="button" class="btn btn-outline-light" id="agileStart">Start</button>
                         </div>
                     </div>
                 </div>
+                <input type="text" value="0" id="abilityAgile" style="display: none;"></input> <!-- Save Agile -->
             </div>
         </div>
     </body>

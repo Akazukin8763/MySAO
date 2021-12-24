@@ -69,7 +69,13 @@ export function start() {
             var chart = $('<canvas></canvas>');
             chart.appendTo(testing);
 
-            showGraph(chart, score, 0, 0, 0, 0);
+            const attack = score;
+            const health = $("#abilityHealth").val();
+            const defense = $("#abilityDefense").val();
+            const reaction = $("#abilityReaction").val();
+            const agile = $("#abilityAgile").val();
+            showGraph(chart, attack, health, defense, reaction, agile);
+            $("#abilityAttack").val(attack);
 
             next.prop("disabled", false);
             testing.off("click");
