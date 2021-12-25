@@ -6,13 +6,7 @@
         public $statement;
     }
     $message = new Message();/*
-    class Ability{
-        public $health;
-        public $attack;
-        public $defense;
-        public $reaction;
-        public $agile;
-    }
+    class Ability{}
     $ability = new Ability();*/
 
     function interrupt($msg){
@@ -23,18 +17,22 @@
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         foreach($_POST as $key => $value) $$key = $value;
+        
+        if ($name == null){ $message->statement = "Name is null"; interrupt($message); }
 
-        if ($id == null){ $message->statement = "ID is null"; interrupt($message); }
-        $sql = "SELECT *
-                FROM ability
-                WHERE ID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(array($id));
-        $result = $stmt->fetchAll();
-        if(count($result) == 0){ $message->statement = "ID isn't exist in ability"; interrupt($message); }
+        try{
+            $sql = "SELECT health, attack, defense, reaction, agile
+                    FROM player natural left outer join ability
+                    WHERE name = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(array($name));
+            $result = $stmt->fetchAll();
+        }
+        catch (Exception $e) {
+            $message->statement = "Error in get ability by name: " . $e->getMessage(); interrupt($message);
+        }
         
         //foreach($result[0] as $key => $value) $ability->$key = $value;
-
         $message->successed = true;
         echo json_encode(array('message' => $message, 'ability' => $result[0]));
     }

@@ -65,15 +65,15 @@
                 })
             })
 
-            $("#_getAbility_btn").click(function() {
-                var _id = $("#_id").val();
-
+            $("#_getAbilityByName_btn").click(function() {
+                var _name = $("#_name2").val();
+                
                 $.ajax({
                     type: "POST",
-                    url: "API/getAbility.php",
+                    url: "API/getAbilityByName.php",
                     dataType: "json",
                     data: {
-                        id: _id
+                        name: _name
                     },
                     success: function(response) {
                         console.log(response.ability);
@@ -118,8 +118,8 @@
         <button type="button" class="btn btn-primary" id="_registerAbility_btn">Register</button><br><br>
         
         <h1>Get ability</h1>
-        <label for="_id">ID: </label>
-        <input type="text" id="_id" name="_id"><br>
-        <button type="button" class="btn btn-primary" id="_getAbility_btn">Get</button><br><br>
+        <label for="_name2">name: </label>
+        <input type="text" id="_name2" name="_name2"><br>
+        <button type="button" class="btn btn-primary" id="_getAbilityByName_btn">Get</button><br><br>
     </body>
 </html>
