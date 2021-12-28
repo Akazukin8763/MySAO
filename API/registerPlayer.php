@@ -17,8 +17,8 @@
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         foreach($_POST as $key => $value) $$key = $value;
-
-        if ($name == null){ $message->nameIllegal = true; interrupt($message); }
+        //輸入: name
+        if (empty($name)){ $message->nameIllegal = true; interrupt($message); }
         $sql = "SELECT COUNT(name)
                 FROM player
                 WHERE name = ?";

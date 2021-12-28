@@ -15,8 +15,8 @@
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         foreach($_POST as $key => $value) $$key = $value;
-
-        if ($id == null){ $message->statement = "ID is null"; interrupt($message); }
+        //輸入: ID
+        if (empty($id)){ $message->statement = "ID is empty"; interrupt($message); }
         /*
         $sql = "SELECT COUNT(ID)
                 FROM ability

@@ -14,10 +14,7 @@
         <script type="module">
 
             $("#_registerPlayer_btn").click(function() {
-                var _name = $("#_name").val();/*
-                var _description =  $("#_description").val();
-                var _levels =  $("#_levels").val();
-                var _guild_ID =  $("#_guild_ID").val();*/
+                var _name = $("#_name").val();
 
                 $.ajax({
                     type: "POST",
@@ -65,12 +62,12 @@
                 })
             })
 
-            $("#_getAbilityByName_btn").click(function() {
+            $("#_getAbility_btn").click(function() {
                 var _name = $("#_name2").val();
                 
                 $.ajax({
                     type: "POST",
-                    url: "API/getAbilityByName.php",
+                    url: "API/getAbility.php",
                     dataType: "json",
                     data: {
                         name: _name
@@ -84,25 +81,107 @@
                     }
                 })
             })
+
+            $("#_updateDescription_btn").click(function() {
+                var _id = $("#_id2").val();
+                var _description = $("#_description").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "API/updatePlayer.php",
+                    dataType: "json",
+                    data: {
+                        id: _id,
+                        description: _description
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
+            
+            $("#_updateLevels_btn").click(function() {
+                var _id = $("#_id2").val();
+                var _levels = $("#_levels").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "API/updatePlayer.php",
+                    dataType: "json",
+                    data: {
+                        id: _id,
+                        levels: _levels
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
+            
+            $("#_updateGuildID_btn").click(function() {
+                var _id = $("#_id2").val();
+                var _guild_ID = $("#_guild_ID").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "API/updatePlayer.php",
+                    dataType: "json",
+                    data: {
+                        id: _id,
+                        guild_ID: _guild_ID
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
+
+            $("#_updateAbility_btn").click(function() {
+                var _id = $("#_id").val();
+                var _health = $("#_health").val();
+                var _attack = $("#_attack").val();
+                var _defense = $("#_defense").val();
+                var _reaction = $("#_reaction").val();
+                var _agile = $("#_agile").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "API/updateAbility.php",
+                    dataType: "json",
+                    data: {
+                        id: _id,
+                        health: _health,
+                        attack: _attack,
+                        defense: _defense,
+                        reaction: _reaction,
+                        agile: _agile
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
         </script>
     </head>
     <body>
-        <!--<button type="button" class="btn btn-primary" id="_test_btn">SHOW IN CONSOLE</button><br><br>-->
-        <!--
-        <label for="_name">description: </label>
-        <input type="text" id="_description" name="_description"><br><br>
-        <label for="_name">levels: </label>
-        <input type="text" id="_levels" name="_levels"><br><br>
-        <label for="_name">guild_ID: </label>
-        <input type="text" id="_guild_ID" name="_guild_ID"><br><br>
-        <input type="submit" id="_submit" value="Submit">-->
-
         <h1>Register player</h1>
         <label for="_name">name: </label>
         <input type="text" id="_name" name="_name"><br>
         <button type="button" class="btn btn-primary" id="_registerPlayer_btn">Register</button><br><br>
 
-        <h1>Register ability</h1>
+        <h1>Register/Update ability</h1>
         <label for="_id">ID: </label>
         <input type="text" id="_id" name="_id"><br>
         <label for="_health">health: </label>
@@ -115,11 +194,25 @@
         <input type="text" id="_reaction" name="_reaction"><br>
         <label for="_agile">agile: </label>
         <input type="text" id="_agile" name="_agile"><br>
-        <button type="button" class="btn btn-primary" id="_registerAbility_btn">Register</button><br><br>
+        <button type="button" class="btn btn-primary" id="_registerAbility_btn">Register</button>
+        <button type="button" class="btn btn-primary" id="_updateAbility_btn">Update</button><br><br>
         
         <h1>Get ability</h1>
         <label for="_name2">name: </label>
         <input type="text" id="_name2" name="_name2"><br>
-        <button type="button" class="btn btn-primary" id="_getAbilityByName_btn">Get</button><br><br>
+        <button type="button" class="btn btn-primary" id="_getAbility_btn">Get</button><br><br>
+
+        <h1>Update player</h1>
+        <label for="_id2">ID: </label>
+        <input type="text" id="_id2" name="_id2"><br>
+        <label for="_description">description: </label>
+        <input type="text" id="_description" name="_description">
+        <button type="button" class="btn btn-primary" id="_updateDescription_btn">Update</button><br>
+        <label for="_levels">levels: </label>
+        <input type="text" id="_levels" name="_levels">
+        <button type="button" class="btn btn-primary" id="_updateLevels_btn">Update</button><br>
+        <label for="_guild_ID">guild_ID: </label>
+        <input type="text" id="_guild_ID" name="_guild_ID">
+        <button type="button" class="btn btn-primary" id="_updateGuildID_btn">Update</button><br><br>
     </body>
 </html>

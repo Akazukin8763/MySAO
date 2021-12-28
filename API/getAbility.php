@@ -17,12 +17,12 @@
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         foreach($_POST as $key => $value) $$key = $value;
-        
-        if ($name == null){ $message->statement = "Name is null"; interrupt($message); }
+        //輸入: name
+        if (empty($name)){ $message->statement = "Name is empty"; interrupt($message); }
 
         try{
             $sql = "SELECT health, attack, defense, reaction, agile
-                    FROM player natural left outer join ability
+                    FROM player natural join ability
                     WHERE name = ?";
             $stmt = $conn->prepare($sql);
             $stmt->execute(array($name));
