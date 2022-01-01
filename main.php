@@ -47,16 +47,16 @@
                     <div class="collapse navbar-collapse" id="navbarToggler">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                <a class="nav-link active" aria-current="page" href="main.php">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Status</a>
+                                <a class="nav-link" href="status.php">Status</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Aincrad</a>
+                                <a class="nav-link" href="aincrad.php">Aincrad</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Guild</a>
+                                <a class="nav-link" href="guild.php">Guild</a>
                             </li>
                         </ul>
                         <div class="input-group w-25">
