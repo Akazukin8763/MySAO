@@ -60,6 +60,10 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
+
+            .detail:hover {
+                transform: scale(1.3);
+            }
         </style>
 
         <script type="module">
@@ -139,11 +143,11 @@
                         </div>
                         <!-- Description Body -->
                         <div class="modal-body" id="descriptionBody">
-                            <h5 id="mainArea">Main Area</h5>
+                            <h5 id="mainArea"></h5>
                             <p id="mainDescription"></p>
-                            <h5 id="majorArea">Major Area</h5>
+                            <h5 id="majorArea"></h5>
                             <p id="majorDescription"></p>
-                            <h5 id="landscape">Landscape</h5>
+                            <h5 id="landscape"></h5>
                             <p id="landscapeDescription"></p>
                         </div>
                         <!-- Description Footer -->
@@ -164,6 +168,17 @@
                         </div>
                         <!-- Enemy Body -->
                         <div class="modal-body" id="enemyBody">
+                            <h5>Boss</h5>
+                            <div id="boss">
+                                <!-- Nothing -->
+                            </div>
+                            <h5>Mobs</h5>
+                            <div id="mobs">
+                                <span style="font-weight: bold">金牛上將巴蘭</span>
+                                <p>金牛族能連續使出產生麻痹效果的劍技「麻痹衝擊」和「麻痹爆破」。</p>
+                                <span style="font-weight: bold">金牛上校納托</span>
+                                <p>金牛族能連續使出產生麻痹效果的劍技「麻痹衝擊」和「麻痹爆破」。</p>
+                            </div>
                         </div>
                         <!-- Enemy Footer -->
                         <div class="modal-footer d-flex justify-content-start">

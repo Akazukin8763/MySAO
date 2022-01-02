@@ -1,3 +1,5 @@
+import { showGraph } from "../ability/showGraph.js";
+
 export function showAincrad() {
     var length = 100;
 
@@ -66,12 +68,60 @@ export function showAincrad() {
                 $("#descriptionHeaderTitle").html("Levels：" + (i * 10 + j + 1) + "｜Description");
                 $("#mainArea").html("Main Area：" + "Unknown...");
                 $("#mainDescription").html("Unknown...");
-                $("#majorDescription").html("Unknown...");
                 $("#majorArea").html("Major Area：" + "Unknown...");
+                $("#majorDescription").html("Unknown...");
+                $("#landscape").html("Landscape");
                 $("#landscapeDescription").html("Unknown...");
 
                 // Enemy
                 $("#enemyHeaderTitle").html("Levels：" + (i * 10 + j + 1) + "｜Enemy");
+
+                /*
+                Enemy
+                */
+                var boss = $("#boss");
+                boss.empty();
+
+                var mobs = $("#mobs");
+                mobs.empty();
+
+                //for (let i = 0; i < 1; i++) {}
+
+                var title = $('<div class="d-flex justify-content-between align-items-center"></div>')
+                var description = $('<p></p>');
+                var chart = $('<canvas></canvas>');
+
+                let is_boss = 1;
+                if (is_boss == 1) {
+                    title.appendTo(boss);
+                    description.appendTo(boss);
+                    chart.appendTo(boss);
+                }
+                else {
+                    title.appendTo(mobs);
+                    description.appendTo(mobs);
+                    chart.appendTo(mobs);
+                }
+
+                showGraph(chart, 10, 20, 30, 40, 50);
+                chart.css({ "display": "none" });
+
+                // Name
+                var name = $('<span style="font-weight: bold">' + "金牛國王亞斯特留斯" + '</span>')
+                var detail = $('<span class="detail bi bi-clipboard-data"></span>')
+
+                var flag = false;
+                detail.click(function() {
+                    if (flag) chart.css({ "display": "none" });
+                    else chart.css({ "display": "block" });
+                    flag = !flag;
+                });
+
+                name.appendTo(title);
+                detail.appendTo(title);
+
+                // Desciption
+                description.html("金牛族能連續使出產生麻痹效果的劍技「麻痹衝擊」和「麻痹爆破」。");
             });
         }
 
