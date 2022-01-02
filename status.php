@@ -30,7 +30,7 @@
                 background: -o-linear-gradient(270deg, rgba(16, 46, 102, 0.9)0%, rgba(135, 220, 233, 0.8)100%);
             }
 
-            .card {
+            .card-header {
                 color: white;
             }
         </style>
@@ -79,6 +79,7 @@
     </head>
     <body>
         <div class="Aincrad">
+
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark header-gradient">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">
@@ -116,18 +117,20 @@
             </nav>
 
             <div class="container">
-                    <br>
+                <br>
                 <div class="row">
                     <div class="col-sm-4">
-                        <div class="card header-gradient">
+                        <div class="card header-gradient" style="height: 86vh">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span>#CR000001</span>
-                                    <span>桐谷和人</span>
+                                    <span id="playerID">#CR000001</span>
+                                    <span id="playerNmae">桐谷和人</span>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <canvas id="ability"></canvas>
+                                <canvas id="ability">
+                                    <!-- Nothing -->
+                                </canvas>
                             </div>
                             <div class="card-footer">
                                 <div>
@@ -157,6 +160,35 @@
                     </div>
                     
                     <div class="col-sm-8">
+
+                        <div class="card header-gradient" style="height: 42vh">
+                            <div class="card-header">
+                                <span>Description</span>
+                            </div>
+                            <div class="card-body">
+
+                            </div>
+                            <div class="card-footer">
+                                <span>⭐💥</span>
+                            </div>
+                        </div>
+
+                        <div style="height: 2vh"></div>
+
+                        <div class="card header-gradient" style="height: 42vh">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Guild</span>
+                                    <span id="guild">Unknown...</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                            </div>
+                            <div class="card-footer">
+                                <span>⭐💥</span>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
