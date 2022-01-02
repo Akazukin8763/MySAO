@@ -1,5 +1,9 @@
 // https://www.chartjs.org/docs/latest/
 export function showGraph(target, attack = 0, health = 0, defense = 0, reaction = 0, agile = 0) {
+    var __max = Math.max(attack, health, defense, reaction, agile);
+    __max = Math.max(__max, 100); // 最低 100
+    __max = Math.min(__max, 1000); // 最高 1000
+
     new Chart(target, {
         type: 'radar',
         data: {
@@ -38,7 +42,7 @@ export function showGraph(target, attack = 0, health = 0, defense = 0, reaction 
             },
             scale: {
                 min: 0,
-                max: 100,
+                max: __max,
             },
             scales: {
                 r: {
