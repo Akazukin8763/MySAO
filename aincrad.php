@@ -9,6 +9,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
         <link href="css/bootstrap-col-5.css" rel="stylesheet">
+        <link href="css/bootstrap-modal-fade.css" rel="stylesheet">
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -38,11 +39,11 @@
                 font-weight: bold;
             }
 
-            .card{
+            .card {
                 transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
                 cursor: pointer;
             }
-            .card:hover{
+            .card:hover {
                 transform: scale(1.05);
                 box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
             }
@@ -62,6 +63,9 @@
         </style>
 
         <script type="module">
+            import { setModal } from "./js/aincrad/setModal.js";
+            setModal();
+
             import { showAincrad } from "./js/aincrad/showAincrad.js";
             window.addEventListener("load", function(event) {
                 showAincrad();
@@ -125,23 +129,46 @@
                 </div>
             </div>
 
-            <!-- Modal Level -->
-            <div class="modal fade" id="level" tabindex="-1" aria-labelledby="level" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+            <!-- Modal Description -->
+            <div class="modal fade" id="description" tabindex="-1" aria-labelledby="description" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content modal-gradient">
-                        <!-- Level Header -->
+                        <!-- Description Header -->
                         <div class="modal-header justify-content-center">
-                            <span class="modal-title" id="levelHeaderTitle"></span>
+                            <span class="modal-title" id="descriptionHeaderTitle"></span>
                         </div>
-                        <!-- Level Body -->
-                        <div class="modal-body" id="levelBody">
-                            <h5>Main Area</h5>
+                        <!-- Description Body -->
+                        <div class="modal-body" id="descriptionBody">
+                            <h5 id="mainArea">Main Area</h5>
+                            <p id="mainDescription"></p>
+                            <h5 id="majorArea">Major Area</h5>
+                            <p id="majorDescription"></p>
+                            <h5 id="landscape">Landscape</h5>
+                            <p id="landscapeDescription"></p>
                         </div>
-                        <!-- Level Footer -->
-                        <!--
+                        <!-- Description Footer -->
                         <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" id="description-enemy">Enemy &gt;</button>
                         </div>
-                        -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Enemy -->
+            <div class="modal fade" id="enemy" tabindex="-1" aria-labelledby="enemy" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content modal-gradient">
+                        <!-- Enemy Header -->
+                        <div class="modal-header justify-content-center">
+                            <span class="modal-title" id="enemyHeaderTitle"></span>
+                        </div>
+                        <!-- Enemy Body -->
+                        <div class="modal-body" id="enemyBody">
+                        </div>
+                        <!-- Enemy Footer -->
+                        <div class="modal-footer d-flex justify-content-start">
+                            <button type="button" class="btn btn-outline-dark" id="enemy-description">&lt; Desciption</button>
+                        </div>
                     </div>
                 </div>
             </div>

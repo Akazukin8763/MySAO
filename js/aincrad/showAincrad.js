@@ -57,19 +57,24 @@ export function showAincrad() {
 
             card.click(function() {
                 // SQL
-                console.log((i * 10 + j + 1));
-                $("#level").modal("show");
+                //console.log((i * 10 + j + 1));
+
+                $("#description").modal("show");
                 $(".carousel").carousel("pause");
 
-                $("#levelHeaderTitle").html("Levels：" + (i * 10 + j + 1));
+                // Level
+                $("#descriptionHeaderTitle").html("Levels：" + (i * 10 + j + 1) + "｜Description");
+                $("#mainArea").html("Main Area：" + "Unknown...");
+                $("#mainDescription").html("Unknown...");
+                $("#majorDescription").html("Unknown...");
+                $("#majorArea").html("Major Area：" + "Unknown...");
+                $("#landscapeDescription").html("Unknown...");
+
+                // Enemy
+                $("#enemyHeaderTitle").html("Levels：" + (i * 10 + j + 1) + "｜Enemy");
             });
         }
 
         innerItem.appendTo(inner);
     }
-
-    // Modal
-    $("#level").on("hidden.bs.modal", function () {
-        $(".carousel").carousel("cycle");
-    });
 }
