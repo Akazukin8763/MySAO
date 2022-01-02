@@ -40,22 +40,36 @@ export function showAincrad() {
             var cardBody = $('<div class="card-body"></div>');
 
             // Image
-            $('<img src="src/image/Tier-S_Forest.png" class="card-img-top">').appendTo(cardImage);
-            $('<div>Levels ' + ( i * 10 + j + 1) + '</div>').appendTo(cardImage);
+            if ((i * 10 + j + 1) == 74) $('<img src="src/image/level74.gif" class="card-img-top">').appendTo(cardImage);
+            else $('<img src="src/image/Tier-S_Forest.png" class="card-img-top">').appendTo(cardImage);
+            $('<div>Levels ' + (i * 10 + j + 1) + '</div>').appendTo(cardImage);
 
             // Body
             $('<h5 class="card-title">Main Area</h5>').appendTo(cardBody);
-            $('<p class="card-text">' + ( i * 10 + j + 1) + '</p>').appendTo(cardBody);
+            $('<p class="card-text">' + (i * 10 + j + 1) + '</p>').appendTo(cardBody);
             $('<h5 class="card-title">Major Area</h5>').appendTo(cardBody);
-            $('<p class="card-text">' + ( i * 10 + j + 1) + '</p>').appendTo(cardBody);
+            $('<p class="card-text">' + (i * 10 + j + 1) + '</p>').appendTo(cardBody);
 
             cardImage.appendTo(card);
             cardBody.appendTo(card);
             card.appendTo(col);
             col.appendTo(innerAll[Math.floor(j / 5)]);
+
+            card.click(function() {
+                // SQL
+                console.log((i * 10 + j + 1));
+                $("#level").modal("show");
+                $(".carousel").carousel("pause");
+
+                $("#levelHeaderTitle").html("Levels：" + (i * 10 + j + 1));
+            });
         }
 
         innerItem.appendTo(inner);
     }
 
+    // Modal
+    $("#level").on("hidden.bs.modal", function () {
+        $(".carousel").carousel("cycle");
+    });
 }

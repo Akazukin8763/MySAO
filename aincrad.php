@@ -28,7 +28,24 @@
                 background: -webkit-linear-gradient(270deg, rgba(16, 46, 102, 0.9)0%, rgba(135, 220, 233, 0.8)100%);
                 background: -o-linear-gradient(270deg, rgba(16, 46, 102, 0.9)0%, rgba(135, 220, 233, 0.8)100%);
             }
+            .modal-gradient {
+                background: linear-gradient(270deg, rgba(57, 170, 96, 0.9)0%, rgba(135, 189, 201, 1)67%);
+                background: -moz-linear-gradient(270deg, rgba(57, 170, 96, 0.9)0%, rgba(135, 189, 201, 1)67%);
+                background: -webkit-linear-gradient(270deg, rgba(57, 170, 96, 0.9)0%, rgba(135, 189, 201, 1)67%);
+                background: -o-linear-gradient(270deg, rgba(57, 170, 96, 0.9)0%, rgba(135, 189, 201, 1)67%);
+            }
+            .modal-header {
+                font-weight: bold;
+            }
 
+            .card{
+                transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+                cursor: pointer;
+            }
+            .card:hover{
+                transform: scale(1.05);
+                box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+            }
             .card-image {
                 position: relative;
                 text-align: center;
@@ -108,6 +125,26 @@
                 </div>
             </div>
 
+            <!-- Modal Level -->
+            <div class="modal fade" id="level" tabindex="-1" aria-labelledby="level" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content modal-gradient">
+                        <!-- Level Header -->
+                        <div class="modal-header justify-content-center">
+                            <span class="modal-title" id="levelHeaderTitle"></span>
+                        </div>
+                        <!-- Level Body -->
+                        <div class="modal-body" id="levelBody">
+                            <h5>Main Area</h5>
+                        </div>
+                        <!-- Level Footer -->
+                        <!--
+                        <div class="modal-footer">
+                        </div>
+                        -->
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
