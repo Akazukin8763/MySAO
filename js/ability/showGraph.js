@@ -30,6 +30,7 @@ export function showGraph(target, attack = 0, health = 0, defense = 0, reaction 
         options: {
             plugins: {
                 legend: {
+                    display: false,
                     labels: {
                         color: '#FFFFFF',
                     }
