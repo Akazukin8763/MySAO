@@ -207,7 +207,7 @@
 
                                     </div>
                                     <div class="card-footer">
-                                        <span>⭐💥</span>
+                                        <a class="btn btn-sm btn-outline-dark w-100" href="aincrad.php">Click here to see more Information</a>
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +224,7 @@
 
                                     </div>
                                     <div class="card-footer">
-                                        <span>⭐💥</span>
+                                        <a class="btn btn-sm btn-outline-dark w-100" href="guild.php">Click here to see more Information</a>
                                     </div>
                                 </div>
                             </div>
