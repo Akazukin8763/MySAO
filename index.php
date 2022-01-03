@@ -173,6 +173,30 @@
                     }
                 })
             })
+
+            $("#_getAincrad_btn").click(function() {
+                var _id = $("#_id").val();
+                var _health = $("#_health").val();
+                var _attack = $("#_attack").val();
+                var _defense = $("#_defense").val();
+                var _reaction = $("#_reaction").val();
+                var _agile = $("#_agile").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "API/Aincrad/getDescription.php",
+                    dataType: "json",
+                    data: {
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                        console.log(response.levelsInfo);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
         </script>
     </head>
     <body>
@@ -214,5 +238,8 @@
         <label for="_guild_ID">guild_ID: </label>
         <input type="text" id="_guild_ID" name="_guild_ID">
         <button type="button" class="btn btn-primary" id="_updateGuildID_btn">Update</button><br><br>
+        
+        <h1>Get Aincrad</h1>
+        <button type="button" class="btn btn-primary" id="_getAincrad_btn">Get</button><br><br>
     </body>
 </html>
