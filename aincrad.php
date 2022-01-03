@@ -18,6 +18,10 @@
         <title>MySAO</title>
 
         <style>
+            body {
+                overflow: hidden;
+            }
+
             .Aincrad {
                 height: 100vh;
                 background-image: url('src/image/Aincrad.png');
@@ -122,11 +126,11 @@
                     <div class="carousel-inner" id="innerAincrad">
                         <!-- Nothing -->
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselAincrad" data-bs-slide="prev" style="left: -5vw; justify-content: left;">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselAincrad" data-bs-slide="prev" style="left: -15%;">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselAincrad" data-bs-slide="next" style="right: -5vw; justify-content: right;">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselAincrad" data-bs-slide="next" style="right: -15%;">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
