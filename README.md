@@ -1,3 +1,10 @@
+2021/13/3
+-----------------------
+
+    新增API: getDescription
+
+    新增API: getAincradDetail
+
 2021/12/28
 -----------------------
 
@@ -27,7 +34,7 @@
 傳入ID
 因為是剛註冊並檢定完的能力，故傳入ID
 
-    執行sql的try catch防護
+    try catch防護
 
 發生錯誤會回傳catch訊息到message.statement
 
