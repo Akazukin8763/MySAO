@@ -41,7 +41,7 @@
         </style>
 
         <script type="module">
-            import { showGraph } from "./js/ability/showGraph.js";
+            import * as ability from "./js/ability/showGraph.js";
             function setStatus() {
                 var __name = "桐谷和人";
         
@@ -60,7 +60,7 @@
                             var reaction = response.ability.reaction;
                             var agile = response.ability.agile;
                             
-                            showGraph($("#ability"), attack, health, defense, reaction, agile);
+                            ability.showGraph($("#abilityChart"), attack, health, defense, reaction, agile);
                             $("#attack").html(attack);
                             $("#health").html(health);
                             $("#defense").html(defense);
@@ -77,6 +77,11 @@
                 })
             }
 
+            import * as guild from "./js/guild/showGraph.js";
+            function setGuild() {
+                guild.showGraph($("#guildChart"), 0, 10, 30, 15, 20);
+            }
+
             // Description Update
             $("#description").parent().dblclick(function() {
                 $("#description").prop('disabled', false);
@@ -88,6 +93,7 @@
 
             window.addEventListener("load", function(event) {
                 setStatus();
+                setGuild();
             });
         </script>
     </head>
@@ -142,7 +148,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <canvas id="ability">
+                                <canvas id="abilityChart">
                                     <!-- Nothing -->
                                 </canvas>
                             </div>
@@ -174,7 +180,7 @@
                     </div>
                     
                     <div class="col-sm-8">
-                        <div class="card header-gradient" style="height: 42vh">
+                        <div class="card header-gradient" style="height: 40vh">
                             <div class="card-header">
                                 <span>Description</span>
                             </div>
@@ -196,7 +202,7 @@
 
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="card header-gradient" style="height: 42vh;">
+                                <div class="card header-gradient" style="height: 44vh;">
                                     <div class="card-header">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span>Aincrad</span>
@@ -213,7 +219,7 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <div class="card header-gradient" style="height: 42vh;">
+                                <div class="card header-gradient" style="height: 44vh;">
                                     <div class="card-header">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span>Guild</span>
@@ -221,7 +227,9 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-
+                                        <canvas id="guildChart">
+                                            <!-- Nothing -->
+                                        </canvas>
                                     </div>
                                     <div class="card-footer">
                                         <a class="btn btn-sm btn-outline-dark w-100" href="guild.php">Click here to see more Information</a>
