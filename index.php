@@ -175,13 +175,6 @@
             })
 
             $("#_getAincrad_btn").click(function() {
-                var _id = $("#_id").val();
-                var _health = $("#_health").val();
-                var _attack = $("#_attack").val();
-                var _defense = $("#_defense").val();
-                var _reaction = $("#_reaction").val();
-                var _agile = $("#_agile").val();
-
                 $.ajax({
                     type: "POST",
                     url: "API/Aincrad/getDescription.php",
@@ -191,6 +184,26 @@
                     success: function(response) {
                         console.log(response.message);
                         console.log(response.levelsInfo);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
+            
+            $("#_getAincradDetail_btn").click(function() {
+                var _level = $("#_level").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "API/Aincrad/getAincradDetail.php",
+                    dataType: "json",
+                    data: {
+                        level: _level
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                        console.log(response.levelInfo);
                     },
                     error: function(jqXHR) {
                         console.log(jqXHR);
@@ -241,5 +254,10 @@
         
         <h1>Get Aincrad</h1>
         <button type="button" class="btn btn-primary" id="_getAincrad_btn">Get</button><br><br>
+        
+        <h1>Get AincradDetail</h1>
+        <label for="_level">level: </label>
+        <input type="text" id="_level" name="_level">
+        <button type="button" class="btn btn-primary" id="_getAincradDetail_btn">Get</button><br><br>
     </body>
 </html>
