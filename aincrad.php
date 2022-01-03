@@ -76,7 +76,21 @@
 
             import { showAincrad } from "./js/aincrad/showAincrad.js";
             window.addEventListener("load", function(event) {
-                showAincrad();
+                var search, tag, index = 0;
+
+                try {
+                    search = location.search.split("?")[1];
+                    tag = search.split("=")[0];
+                    index = search.split("=")[1];
+
+                    if (tag != "index") index = 0;
+                }
+                catch {
+                    // Nothing
+                }
+                finally {
+                    showAincrad(index % 10);
+                }
             });
         </script>
     </head>

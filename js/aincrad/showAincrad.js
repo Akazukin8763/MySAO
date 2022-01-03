@@ -1,6 +1,6 @@
 import { showGraph } from "../ability/showGraph.js";
 
-export function showAincrad() {
+export function showAincrad(index = 0) {
     var length = 100;
 
     // Indicators
@@ -20,7 +20,7 @@ export function showAincrad() {
 
     for (let i = 0; i < length / 10; i++) {
         var innerItem = $('<div class="carousel-item">');
-        if (i == 0) innerItem.addClass("active");
+        if (i == index) innerItem.addClass("active");
 
         // 0 ~ 4
         $('<br>').appendTo(innerItem);
