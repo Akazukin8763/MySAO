@@ -33,6 +33,11 @@
             .card-header {
                 color: white;
             }
+
+            .form-control:focus {
+                border-color: rgba(135, 220, 233, 0.95);
+                box-shadow: 0 0 0 0.2rem rgba(16, 46, 102, 0.25);
+            }
         </style>
 
         <script type="module">
@@ -71,6 +76,15 @@
                     }
                 })
             }
+
+            // Description Update
+            $("#description").parent().dblclick(function() {
+                $("#description").prop('disabled', false);
+                $("#description").focus();
+            })
+            $("#description").focusout(function() {
+                $("#description").prop('disabled', true);
+            })
 
             window.addEventListener("load", function(event) {
                 setStatus();
@@ -160,36 +174,61 @@
                     </div>
                     
                     <div class="col-sm-8">
-
                         <div class="card header-gradient" style="height: 42vh">
                             <div class="card-header">
                                 <span>Description</span>
                             </div>
                             <div class="card-body">
-
+                                <textarea class="form-control" id="description" style="background-color: inherit; color: white; height: 100%;" disabled></textarea>
                             </div>
                             <div class="card-footer">
-                                <span>⭐💥</span>
+                                <div class="d-flex justify-content-between">
+                                    <span>
+                                        <i class="bi bi-lightbulb"></i>
+                                        Double-click on textarea to edit description.
+                                    </span>
+                                    <span id="descriptionERR" style="color: rgb(200, 0, 0)">(ERR-TEXT-TEMP)</span>
+                                </div>
                             </div>
                         </div>
 
                         <div style="height: 2vh"></div>
 
-                        <div class="card header-gradient" style="height: 42vh">
-                            <div class="card-header">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span>Guild</span>
-                                    <span id="guild">Unknown...</span>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="card header-gradient" style="height: 42vh;">
+                                    <div class="card-header">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span>Aincrad</span>
+                                            <span id="level">#1</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+
+                                    </div>
+                                    <div class="card-footer">
+                                        <span>⭐💥</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-body">
 
-                            </div>
-                            <div class="card-footer">
-                                <span>⭐💥</span>
+                            <div class="col-sm-6">
+                                <div class="card header-gradient" style="height: 42vh;">
+                                    <div class="card-header">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span>Guild</span>
+                                            <span id="guild">Unknown...</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+
+                                    </div>
+                                    <div class="card-footer">
+                                        <span>⭐💥</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
