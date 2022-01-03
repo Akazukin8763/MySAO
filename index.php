@@ -252,7 +252,7 @@
         <input type="text" id="_guild_ID" name="_guild_ID">
         <button type="button" class="btn btn-primary" id="_updateGuildID_btn">Update</button><br><br>
         
-        <h1>Get Aincrad</h1>
+        <h1>Get Aincrad Table</h1>
         <button type="button" class="btn btn-primary" id="_getAincrad_btn">Get</button><br><br>
         
         <h1>Get AincradDetail</h1>

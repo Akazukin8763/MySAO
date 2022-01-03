@@ -18,7 +18,7 @@
 
     function interrupt($msg){
         $msg->successed = false;
-        $_SESSION["message"] = $message;
+        echo json_encode(array('message' => $msg));
         exit;
     }
 
