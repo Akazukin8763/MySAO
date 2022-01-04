@@ -8,6 +8,6 @@ export function linkOver() {
     video.trigger("play");
     
     video.on("ended", function() {
-        window.location.href = "register.html";
+        window.location.href = "main.php";
     });
 }

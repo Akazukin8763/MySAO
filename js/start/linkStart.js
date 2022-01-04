@@ -48,7 +48,7 @@ function loginMenu() {
 
     var col3 = $('<div class="col-5"></div>');
     $('<br>').appendTo(col3);
-    $('<label for="username" required="required">:account</label>').appendTo(col3);
+    $('<label for="username" required="required">:account</label><a class="float-end" href="register.html">register</a>').appendTo(col3);
     let username = $('<input type="text" class="form-control" id="username" name="username">').appendTo(col3);
     $('<label for="password" required="required" style="padding-top: 5%;">:password</label>').appendTo(col3);
     $('<input type="text" class="form-control" id="password" name="password" value="******" disabled>').appendTo(col3);
