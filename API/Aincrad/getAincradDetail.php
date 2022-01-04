@@ -14,14 +14,14 @@
     $levelInfo = new Info();
     //樓層與敵人資訊
     //含有 各aincrad的attribute 與 enemy陣列
-    //ex: levelInfo.major_area ; levelInfo.enemy[0].name
+    //ex: levelInfo.major_area ; levelInfo.enemy[0].attack
 
     function interrupt($msg){
         $msg->successed = false;
         echo json_encode(array('message' => $msg));
         exit;
     }
-
+    
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         try{
             foreach($_POST as $key => $value) $$key = $value;
@@ -40,8 +40,8 @@
                 $levelInfo->$key = $value;
             
             $sql = "SELECT *
-            FROM enemy
-            WHERE levels = ?";
+                    FROM enemy natural left outer join ability
+                    WHERE levels = ?";
             $stmt = $conn->prepare($sql);
             $stmt->execute(array($level));
             $result = $stmt->fetchAll();
@@ -51,7 +51,7 @@
                 foreach($result[$i] as $key => $value)
                     $levelInfo->enemy[$i]->$key = $value;
             }
-
+            
             $message->successed = true;
             echo json_encode(array('message' => $message, 'levelInfo' => $levelInfo));
         } catch (Exception $e) { $message->statement = $e->getMessage(); interrupt($message); }

@@ -25,9 +25,9 @@
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll();
-
-            $levelsInfo[0] = NULL;
-            for($i=0, $temp = new Info(); $i<100; $i++) {
+            
+            for($i=0; $i<100; $i++) {
+                $temp = new Info();
                 foreach($result[$i] as $key => $value)
                     $temp->$key = $value;
                 $levelsInfo[] = $temp;
