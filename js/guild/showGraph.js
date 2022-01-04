@@ -1,33 +1,28 @@
 // https://www.chartjs.org/docs/latest/
 export function showGraph(target, attack = 0, health = 0, defense = 0, reaction = 0, agile = 0) {
-    var __max = Math.max(attack, health, defense, reaction, agile);
+
+    var label = ["1", "2", "3"];
+    var val = [10, 20, 30];
 
     new Chart(target, {
         type: 'bar',
         data: {
-            labels: [
-                'Attack',
-                'Health',
-                'Defense',
-                'Reaction',
-                'Agile',
-            ],
+            labels: label,
             datasets: [{
                 label: 'Guild',
-                data: [attack, health, defense, reaction, agile],
+                data: val,
                 fill: true,
-                backgroundColor: 'rgba(135, 220, 233, 0.2)',
+
+                backgroundColor: function(context) { return context.dataIndex % 2 ? 'rgba(135, 220, 233, 0.4)' : 'rgba(135, 220, 233, 0.2)'; },
                 borderColor: 'rgba(135, 220, 233, 0.8)',
-                pointBackgroundColor: 'rgba(135, 220, 233, 0.8)',
-                pointBorderColor: '#FFFFFF',
-                pointHoverBackgroundColor: '#FFFFFF',
-                pointHoverBorderColor: 'rgb(30, 132, 255)',
-                pointLabelFontColor: '#FFFFFF',
+
+                borderWidth: 3,
             }]
         },
         options: {
             plugins: {
                 legend: {
+                    display: false,
                     labels: {
                         color: '#FFFFFF',
                     }
