@@ -8,8 +8,6 @@
         <!-- Bootstrap CSS --><!-- CSS only -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-        <link href="css/bootstrap-col-5.css" rel="stylesheet">
-        <link href="css/bootstrap-modal-fade.css" rel="stylesheet">
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -37,6 +35,41 @@
             .form-control:focus {
                 border-color: rgba(135, 220, 233, 0.95);
                 box-shadow: 0 0 0 0.2rem rgba(16, 46, 102, 0.25);
+            }
+
+            :root {
+                --size: 42px;
+            }
+            #aincrad .card-body {
+                text-align: center;
+                color: hsla(210, 20%, 90%, 0.89);
+                font-family: 'Roboto Condensed', sans-serif;
+                font-weight: 300;
+                overflow: hidden;
+            }
+            .column {
+                display: inline-block;
+                vertical-align: top;
+                font-size: var(--size);
+                line-height: var(--size);
+                transition: transform 300ms;
+            }
+            .num {
+                transition: opacity 500ms, text-shadow 100ms;
+                opacity: 0.025;
+            }
+            .num.visible {
+                opacity: 1.0;
+                text-shadow: 1px 1px 0px hsl(210, 50%, 40%);
+            }
+            .num.close {
+                opacity: 0.35;
+            }
+            .num.far {
+                opacity: 0.15;
+            }
+            .num.distant {
+                opacity: 0.1;
             }
         </style>
 
@@ -83,17 +116,51 @@
             }
 
             // Description Update
-            $("#description").parent().dblclick(function() {
-                $("#description").prop('disabled', false);
-                $("#description").focus();
+            $("#descriptionArea").parent().dblclick(function() {
+                $("#descriptionArea").prop('disabled', false);
+                $("#descriptionArea").focus();
             })
-            $("#description").focusout(function() {
-                $("#description").prop('disabled', true);
+            $("#descriptionArea").focusout(function() {
+                $("#descriptionArea").prop('disabled', true);
             })
 
+            // Level Selector
+            // https://codepen.io/Alca/pen/BZbPrE
+            let size = 42; // font size (px)
+            let classList = [ 'visible', 'close', 'far', 'far', 'distant', 'distant' ];
+
+            let counter = 1;
+            $("#aincradLevelPrev").click(function() {
+                counter = (counter + 98) % 100 + 1;
+                setLevel(counter);
+            });
+            $("#aincradLevelNext").click(function() {
+                counter = counter % 100 + 1;
+                setLevel(counter);
+            });
+            function setLevel(counter) {
+                let columns = [...document.getElementsByClassName('column')];
+                let num = ("000" + counter).slice(-3);
+
+                columns.forEach((ele, i) => {
+                    let n = +num[i];
+                    let offset = -n * size;
+                    ele.style.transform = 'translateY(calc(25% + ' + offset + 'px - ' + (size / 2) + 'px))';
+                    
+                    Array.from(ele.children).forEach((ele2, i2) => {
+                        ele2.className = 'num ' + getClass(n, i2);
+                    });
+                });
+            }
+            function getClass(n, i2) {
+                return classList.find((class_, classIndex) => Math.abs(n - i2) === classIndex) || '';
+            }
+
+            // Window Load
             window.addEventListener("load", function(event) {
                 setStatus();
                 setGuild();
+                setLevel(counter);
             });
         </script>
     </head>
@@ -180,12 +247,12 @@
                     </div>
                     
                     <div class="col-sm-8">
-                        <div class="card header-gradient" style="height: 40vh">
+                        <div class="card header-gradient" id="description" style="height: 40vh">
                             <div class="card-header">
                                 <span>Description</span>
                             </div>
                             <div class="card-body">
-                                <textarea class="form-control" id="description" style="background-color: inherit; color: white; height: 100%;" disabled></textarea>
+                                <textarea class="form-control" id="descriptionArea" style="background-color: inherit; color: white; height: 100%;" disabled></textarea>
                             </div>
                             <div class="card-footer">
                                 <div class="d-flex justify-content-between">
@@ -202,15 +269,59 @@
 
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="card header-gradient" style="height: 44vh;">
+                                <div class="card header-gradient" id="aincrad" style="height: 44vh;">
                                     <div class="card-header">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span>Aincrad</span>
-                                            <span id="level">#1</span>
+                                            <span id="aincradLevel">#1</span>
                                         </div>
                                     </div>
                                     <div class="card-body">
-
+                                        <div class="column">
+                                            <div class="num">0</div>
+                                            <div class="num">1</div>
+                                            <div class="num">2</div>
+                                            <div class="num">3</div>
+                                            <div class="num">4</div>
+                                            <div class="num">5</div>
+                                            <div class="num">6</div>
+                                            <div class="num">7</div>
+                                            <div class="num">8</div>
+                                            <div class="num">9</div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="num">0</div>
+                                            <div class="num">1</div>
+                                            <div class="num">2</div>
+                                            <div class="num">3</div>
+                                            <div class="num">4</div>
+                                            <div class="num">5</div>
+                                            <div class="num">6</div>
+                                            <div class="num">7</div>
+                                            <div class="num">8</div>
+                                            <div class="num">9</div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="num">0</div>
+                                            <div class="num">1</div>
+                                            <div class="num">2</div>
+                                            <div class="num">3</div>
+                                            <div class="num">4</div>
+                                            <div class="num">5</div>
+                                            <div class="num">6</div>
+                                            <div class="num">7</div>
+                                            <div class="num">8</div>
+                                            <div class="num">9</div>
+                                        </div>
+                                        
+                                        <button class="carousel-control-prev" id="aincradLevelPrev" type="button">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" id="aincradLevelNext" type="button">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
                                     </div>
                                     <div class="card-footer">
                                         <a class="btn btn-sm btn-outline-dark w-100" href="aincrad.php">Click here to see more Information</a>
@@ -219,11 +330,11 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <div class="card header-gradient" style="height: 44vh;">
+                                <div class="card header-gradient" id="guild" style="height: 44vh;">
                                     <div class="card-header">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span>Guild</span>
-                                            <span id="guild">Unknown...</span>
+                                            <span id="guildName">Unknown...</span>
                                         </div>
                                     </div>
                                     <div class="card-body">
