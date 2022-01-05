@@ -4,6 +4,7 @@
     class Message{
         public $successed;
         public $statement;
+        public $guildNotExist = false;
     }
     class Info{
         public $player = array();  //考慮沒有元素的情況 也保持陣列型態
@@ -33,6 +34,8 @@
             $stmt = $conn->prepare($sql);
             $stmt->execute(array($guild_name));
             $result = $stmt->fetchAll();
+
+            if(count($result) != 1) { $message->$guildNotExist = true; interrupt($message); }
 
             foreach($result[0] as $key => $value)
                 $guildInfo->$key = $value;
