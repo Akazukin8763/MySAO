@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-12-20 10:31:08
+-- 產生時間： 2022-01-05 10:27:30
 -- 伺服器版本： 10.4.22-MariaDB
 -- PHP 版本： 7.4.26
 
@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `ability` (
   `ID` char(8) NOT NULL,
-  `health` int(16) NOT NULL,
-  `attack` int(16) NOT NULL,
-  `defense` int(16) NOT NULL,
-  `reaction` int(16) NOT NULL,
-  `agile` int(16) NOT NULL
+  `health` int(16) DEFAULT NULL,
+  `attack` int(16) DEFAULT NULL,
+  `defense` int(16) DEFAULT NULL,
+  `reaction` int(16) DEFAULT NULL,
+  `agile` int(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -41,7 +41,68 @@ CREATE TABLE `ability` (
 --
 
 INSERT INTO `ability` (`ID`, `health`, `attack`, `defense`, `reaction`, `agile`) VALUES
-('CR000001', 487, 126, 10, 99999, 50);
+('CR000001', 487, 126, 10, 1000, 50),
+('CR000002', 450, 70, 10, 999, 70),
+('CR000003', NULL, NULL, NULL, NULL, NULL),
+('CR000004', NULL, NULL, NULL, NULL, NULL),
+('CR000005', NULL, NULL, NULL, NULL, NULL),
+('CR000006', NULL, NULL, NULL, NULL, NULL),
+('CR000007', NULL, NULL, NULL, NULL, NULL),
+('CR000008', NULL, NULL, NULL, NULL, NULL),
+('EM000101', NULL, NULL, NULL, NULL, NULL),
+('EM000102', NULL, NULL, NULL, NULL, NULL),
+('EM000201', NULL, NULL, NULL, NULL, NULL),
+('EM000202', NULL, NULL, NULL, NULL, NULL),
+('EM000203', NULL, NULL, NULL, NULL, NULL),
+('EM000301', NULL, NULL, NULL, NULL, NULL),
+('EM000401', NULL, NULL, NULL, NULL, NULL),
+('EM000501', NULL, NULL, NULL, NULL, NULL),
+('EM000601', NULL, NULL, NULL, NULL, NULL),
+('EM000901', NULL, NULL, NULL, NULL, NULL),
+('EM001001', NULL, NULL, NULL, NULL, NULL),
+('EM001101', NULL, NULL, NULL, NULL, NULL),
+('EM003002', NULL, NULL, NULL, NULL, NULL),
+('EM003501', NULL, NULL, NULL, NULL, NULL),
+('EM003502', NULL, NULL, NULL, NULL, NULL),
+('EM003901', NULL, NULL, NULL, NULL, NULL),
+('EM003902', NULL, NULL, NULL, NULL, NULL),
+('EM004001', NULL, NULL, NULL, NULL, NULL),
+('EM005601', NULL, NULL, NULL, NULL, NULL),
+('EM006502', NULL, NULL, NULL, NULL, NULL),
+('EM006503', NULL, NULL, NULL, NULL, NULL),
+('EM006901', NULL, NULL, NULL, NULL, NULL),
+('EM007301', NULL, NULL, NULL, NULL, NULL),
+('EM007401', 9999, 199, 20, 10, 0),
+('EM007402', NULL, NULL, NULL, NULL, NULL),
+('EM007403', NULL, NULL, NULL, NULL, NULL),
+('EM007404', NULL, NULL, NULL, NULL, NULL),
+('EM007501', NULL, NULL, NULL, NULL, NULL),
+('EM007601', NULL, NULL, NULL, NULL, NULL),
+('EM007701', NULL, NULL, NULL, NULL, NULL),
+('EM007801', NULL, NULL, NULL, NULL, NULL),
+('EM007901', NULL, NULL, NULL, NULL, NULL),
+('EM008001', NULL, NULL, NULL, NULL, NULL),
+('EM008101', NULL, NULL, NULL, NULL, NULL),
+('EM008201', NULL, NULL, NULL, NULL, NULL),
+('EM008301', NULL, NULL, NULL, NULL, NULL),
+('EM008401', NULL, NULL, NULL, NULL, NULL),
+('EM008501', NULL, NULL, NULL, NULL, NULL),
+('EM008601', NULL, NULL, NULL, NULL, NULL),
+('EM008701', NULL, NULL, NULL, NULL, NULL),
+('EM008801', NULL, NULL, NULL, NULL, NULL),
+('EM008901', NULL, NULL, NULL, NULL, NULL),
+('EM009001', NULL, NULL, NULL, NULL, NULL),
+('EM009101', NULL, NULL, NULL, NULL, NULL),
+('EM009201', NULL, NULL, NULL, NULL, NULL),
+('EM009301', NULL, NULL, NULL, NULL, NULL),
+('EM009401', NULL, NULL, NULL, NULL, NULL),
+('EM009501', NULL, NULL, NULL, NULL, NULL),
+('EM009601', NULL, NULL, NULL, NULL, NULL),
+('EM009701', NULL, NULL, NULL, NULL, NULL),
+('EM009801', NULL, NULL, NULL, NULL, NULL),
+('EM009901', NULL, NULL, NULL, NULL, NULL),
+('EM010000', NULL, NULL, NULL, NULL, NULL),
+('EM010001', NULL, NULL, NULL, NULL, NULL);
 
 --
 -- 觸發器 `ability`
@@ -209,7 +270,52 @@ INSERT INTO `enemy` (`ID`, `name`, `description`, `levels`, `is_boss`) VALUES
 ('EM000301', '惡魔樹精涅里烏斯', '具有大型樹木般的姿態，能夠釋放大範圍毒化技能。', 3, 1),
 ('EM000401', '海馬維斯格', '注水，一招能讓整個大廳為水所淹沒的可怕技能，另外頭目使用能力後，房間的門會關上，雖然絕對不能從內側打開，不過在對它施加一定值以上的水壓的狀態下，只要從外側一拉大門就能簡單地打開。', 4, 1),
 ('EM000501', '空虛巨像·福斯克斯', '整個第五層的BOSS房間都是該BOSS的身體，該BOSS擁有使視覺亮度下降、聽覺下降、平衡感下降、HP漸減等等的debuff吼叫，另外該BOSS房間會出現藍色線條，當玩家觸碰到藍色線條，隱藏在地板下的手與隱藏在天花板上的腳會對玩家發動攻擊，當BOSS血量進入第六根時，BOSS會變成人形的石巨人，從天花板上分離出來。\r\nRPG中常見的石巨人怪物，但是這個BOSS卻具有從未見過的攻擊模式，能夠配合寬敞的房間，接連不斷地放出複雜的地毯式機關，讓攻略隊伍吃盡苦頭。', 5, 1),
-('EM000601', '荒謬方塊', NULL, 6, 1);
+('EM000601', '荒謬方塊', NULL, 6, 1),
+('EM000901', '墮落精靈德魔尼', NULL, 9, 1),
+('EM001001', '蛇武士領主', NULL, 10, 1),
+('EM001101', '暴風獅鷲', NULL, 11, 1),
+('EM003002', '海蛇', NULL, 30, 0),
+('EM003501', '叛教者尼古拉斯', '聖誕節限定的活動BOSS。有着惡搞聖誕老人醜陋版的衣着和麪容的怪物。在12月25日0時出現，左手抓的禮物袋子會掉落大量道具，有武器、防具、寶石、水晶，甚至還有食材，其中有能使十秒內死亡的玩家復活的夢幻道具『還魂之聖晶石』，因此有着很高的競爭率。武器是斧頭。雖然桐人可以單獨擊破它，但即使在戰鬥中使用了身上帶的所有回覆結晶和回覆藥水，桐人的HP也降到了紅色警戒範圍，被推測為是比35層左右的守層BOSS更強的怪物。', 35, 1),
+('EM003502', '醉狂猿人', '第35層的地牢、迷路森林出沒的猿人怪物。', 35, 0),
+('EM003901', '[經典造型的中型龍類]', NULL, 39, 1),
+('EM003902', '氣球果蝠', '是體型像氣球一樣圓的蝙蝠類怪物。翼展雖然只有六十釐米，但巨大的嘴裏長着四顆閃閃的獠牙，雙翼上也伸出長長的鈎爪。蝙蝠系怪物幾乎都是“非視覺感知型”，即可以覺察到後方的玩家。氣球果蝠的迴避很高，卻沒有毒或吐息等麻煩的特殊能力，單體來説是很好打的那種怪物，但卻有一個特點——連動範圍異常廣大，其範圍幾乎完全籠罩這個丘陵地帶。也就是説，在這個山坡某處跟果蝠戰鬥的話，同類的怪物會從另一端成片湧來。', 39, 0),
+('EM004001', '典獄長布拉肯', NULL, 40, 1),
+('EM005601', '大地爬行者', '演奏「露露的安眠曲」會使其入睡，弱點是沒有裝甲覆蓋的腹部柔軟部分。', 56, 1),
+('EM006502', '稻草人', NULL, 65, 0),
+('EM006503', '幽靈', NULL, 65, 0),
+('EM006901', '[No Name]', '據莉茲貝特説，桐人在BOSS戰時不小心在BOSS眼前摔倒了，新聞的整整一版都記載着那篇報道。', 69, 1),
+('EM007301', '[No Name]', '據桐人説是「大而硬」型的，由KoB和DDA不斷切換完成攻略。', 73, 1),
+('EM007401', '閃耀魔眼', '軀體龐大，全身由像粗繩般隆起的肌肉包裹着。武器是一把大型劍。皮膚是深藍色，有着山羊般的頭部。彎曲的粗大羊角由頭部兩側往後方高高立起。眼睛如同燃着藍白色火焰般散發出光芒。下半身長滿了深藍色長毛，接近於惡魔的造型，因而又有「藍眼惡魔」的異名。另外，桐人曾在ALO中變身成樣貌酷似此BOSS的怪物。', 74, 1),
+('EM007402', '雜燴兔', '兔型的怪物。因為身上的肉非常美味而被認定為S級的食材。逃跑速度以被認為是SAO最高層程度的敏捷而著稱，桐人即使以接近戰好像也沒有捉住它的信心。', 74, 0),
+('EM007403', '蜥蜴人領主', '第74層迷宮區的怪物。武器是彎刀和圓盾。像蜥蜴一樣兩隻足步行的怪物。能使用彎刀的上位劍技，因此是個非常難對付的對手。它和74層以後的怪物一樣，AI的算法有發生變化的趨勢。', 74, 0),
+('EM007404', '惡魔僱工', '第74層迷宮區的怪物。武器是長劍和圓盾。骸骨劍士般的怪物。在超過2米長的身體上閃着藍色的磷光，具有強大的肌肉力量指數。', 74, 0),
+('EM007501', '骸骨獵殺者', '全長十公尺左右。以腕上的兩把鐮刀以及尾巴末端的長槍狀骨頭為武器。由多數體節所組成的身體如同人類的背脊骨，每一段灰白色圓筒型的體節旁都伸出一對骨頭整個外露的尖鋭步足。逐漸變粗的前端有着一顆臉型兇惡的頭蓋骨，扭曲成流線型的骨頭上有着兩對共四個往上高高吊起的眼窩，內側還閃爍着藍色火焰。整個往前方突出的下顎骨並排着鋭利尖牙，頭骨兩側還有宛如鐮刀狀的巨大骨頭手臂往外突了出來。', 75, 1),
+('EM007601', '恐怖凝視', '該BOSS具有麻痺攻擊能力，另外瀕死時會頻繁釋放群體法術，不過威力很小。', 76, 1),
+('EM007701', '結晶之爪', '該BOSS具有麻痺攻擊和毒攻擊能力。毒攻擊能力傷害很高。', 77, 1),
+('EM007801', '狂暴犄角', '該BOSS三連斧威力很強，但是攻擊速度並不是太快。', 78, 1),
+('EM007901', '三重風暴', '血量比較高，另外附帶麻痺攻擊。', 79, 1),
+('EM008001', '罪惡之鐮', '該BOSS血量高，攻擊力一般，但是失去一行血一下會釋放強力群體技能。', 80, 1),
+('EM008101', '暗黑騎士', '此BOSS血量減少時，會使用自我強化技能，另外，該BOSS單體攻擊較強。', 81, 1),
+('EM008201', '宏偉遺產', '該BOSS攻擊力比較高，攻擊附帶麻痺與出血狀態，當剩下最後一行血時會頻繁釋放群體技能。', 82, 1),
+('EM008301', '暴怒犄角', '這個BOSS同樣會使用自我強化技能，不過他的斧頭命中率不太高。', 83, 1),
+('EM008401', '蟻后', '該BOSS輸出較高，具備麻痺攻擊能力。紅血後會放大範圍毒氣，中毒傷害很高。', 84, 1),
+('EM008501', '三重漩渦', '該BOSS範圍攻擊傷害很高，攻擊附帶麻痺、毒技能。', 85, 1),
+('EM008601', '骷髏帝王', '此BOSS範圍攻擊強大並且覆蓋面廣，攻擊附帶黑暗、毒、麻痺屬性。', 86, 1),
+('EM008701', '光輝食者', 'BOSS初期會釋放附帶黑暗和攻擊速度降低的攻擊，瀕死時會頻繁釋放直線 AOE技能 ，範圍很大附附帶麻痺效果。', 87, 1),
+('EM008801', '反叛魔眼', '此怪物攻高防低。', 88, 1),
+('EM008901', '殺手獠牙', 'BOSS普通攻擊附帶出血、降藍效果，它的扇形噴焰附帶麻痺效果。', 89, 1),
+('EM009001', '劍之支配者', '攻擊力略高，擁有大範圍出血技能，攻擊範圍很大。', 90, 1),
+('EM009101', '絕對凝視者', '血厚，攻擊力一般。攻擊附帶麻痺、出血、降藍效果。', 91, 1),
+('EM009201', '混沌龍', '血厚攻高，它的火屬性吐息傷害很高，附帶麻痺效果。', 92, 1),
+('EM009301', '熔岩爬行者', '毒攻擊範圍廣，擁有毒、麻痺攻擊能力。', 93, 1),
+('EM009401', '灼熱騎士', '攻擊力很強，範圍大，攻擊速度也很快。', 94, 1),
+('EM009501', '滅族魔眼', '該BOSS爆發力很強，傷害高，攻擊速度快。攻擊附帶黑暗、麻痺效果。', 95, 1),
+('EM009601', '屠戮獠牙', '該BOSS突進攻擊附帶摔倒、出血、降藍狀態，HP下降會使用附帶麻痺、出血效果的異常攻擊。', 96, 1),
+('EM009701', '死神皇帝', '該BOSS傷害非常高，攻擊附帶HP下降、毒、黑暗、癱瘓的狀態。', 97, 1),
+('EM009801', '帝王龍', '攻擊附帶HP下降、出血、麻痺的狀態，會頻繁釋放帶麻痺的龍息。', 98, 1),
+('EM009901', '神靈統治者', '擁有附帶黑暗、麻痺的範圍攻擊，它的突進技附帶出血效果。攻擊速度很快。', 99, 1),
+('EM010000', '希茲克利夫', '攻擊力極高，防禦極高。', 100, 1),
+('EM010001', '異世界的化身', '擁有多種攻防手段，除了普通物理攻擊和遠程攻擊之外還有3種特殊攻擊，身體各處帶有魔法石的保護屏障，還有10個可以恢復體力的原始HP條。', 100, 1);
 
 -- --------------------------------------------------------
 
@@ -219,16 +325,22 @@ INSERT INTO `enemy` (`ID`, `name`, `description`, `levels`, `is_boss`) VALUES
 
 CREATE TABLE `guild` (
   `guild_ID` char(8) NOT NULL,
-  `guild_name` varchar(32) DEFAULT NULL
+  `guild_name` varchar(32) DEFAULT NULL,
+  `ID` char(8) NOT NULL,
+  `establishment` date DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `guild`
 --
 
-INSERT INTO `guild` (`guild_ID`, `guild_name`) VALUES
-('GD000001', '月夜黑貓團'),
-('GD000002', '血盟騎士團');
+INSERT INTO `guild` (`guild_ID`, `guild_name`, `ID`, `establishment`) VALUES
+('GD000001', '月夜黑貓團', 'CR000003', '2022-01-05'),
+('GD000002', '血盟騎士團', 'CR000004', '2022-01-05'),
+('GD000003', '微笑棺木', 'CR000005', '2022-01-05'),
+('GD000004', '艾恩葛朗特解放軍', 'CR000006', '2022-01-05'),
+('GD000007', '黃金蘋果', 'CR000007', '2022-01-05'),
+('GD000008', '風林火山', 'CR000008', '2022-01-05');
 
 -- --------------------------------------------------------
 
@@ -250,7 +362,13 @@ CREATE TABLE `player` (
 
 INSERT INTO `player` (`ID`, `name`, `description`, `levels`, `guild_ID`) VALUES
 ('CR000001', '桐谷和人', '封閉者', 1, NULL),
-('CR000002', '結城明日奈', '血盟騎士團副團長', 1, 'GD000002');
+('CR000002', '結城明日奈', '血盟騎士團副團長', 1, 'GD000002'),
+('CR000003', '啟太', '', 1, 'GD000001'),
+('CR000004', '茅場晶彥', '', 74, 'GD000002'),
+('CR000005', '瓦沙克·卡薩魯斯', '', 1, 'GD000003'),
+('CR000006', '辛卡', '', 1, 'GD000004'),
+('CR000007', '優子', '', 1, 'GD000007'),
+('CR000008', '克萊因', '', 1, 'GD000008');
 
 --
 -- 已傾印資料表的索引
@@ -279,7 +397,8 @@ ALTER TABLE `enemy`
 -- 資料表索引 `guild`
 --
 ALTER TABLE `guild`
-  ADD PRIMARY KEY (`guild_ID`);
+  ADD PRIMARY KEY (`guild_ID`),
+  ADD KEY `ID` (`ID`);
 
 --
 -- 資料表索引 `player`
@@ -298,6 +417,12 @@ ALTER TABLE `player`
 --
 ALTER TABLE `enemy`
   ADD CONSTRAINT `enemy_ibfk_1` FOREIGN KEY (`levels`) REFERENCES `aincrad` (`levels`) ON UPDATE CASCADE;
+
+--
+-- 資料表的限制式 `guild`
+--
+ALTER TABLE `guild`
+  ADD CONSTRAINT `guild_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `player` (`ID`) ON UPDATE CASCADE;
 
 --
 -- 資料表的限制式 `player`
