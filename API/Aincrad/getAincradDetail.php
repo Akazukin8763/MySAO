@@ -27,7 +27,7 @@
             foreach($_POST as $key => $value) $$key = $value;
             //輸入level
             if(empty($level)) { $message->statement = "Empty!"; interrupt($message); }
-            if($level < 1 || $level > 100) { $out_of_range = true; interrupt($message); }
+            if($level < 1 || $level > 100) { $message->out_of_range = true; interrupt($message); }
 
             $sql = "SELECT *
                     FROM aincrad

@@ -12,7 +12,25 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="module">
+            $("#_login_btn").click(function() {
+                var _name = $("#_name0").val();
 
+                $.ajax({
+                    type: "POST",
+                    url: "API/Player/Login.php",
+                    dataType: "json",
+                    data: {
+                        name: _name
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
+            
             $("#_registerPlayer_btn").click(function() {
                 var _name = $("#_name").val();
 
@@ -109,7 +127,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "API/updatePlayer.php",
+                    url: "API/Player/updatePlayer.php",
                     dataType: "json",
                     data: {
                         id: _id,
@@ -127,14 +145,16 @@
             $("#_updateGuildID_btn").click(function() {
                 var _id = $("#_id2").val();
                 var _guild_ID = $("#_guild_ID").val();
+                var _guild_name = $("#_guild_name").val();
 
                 $.ajax({
                     type: "POST",
-                    url: "API/updatePlayer.php",
+                    url: "API/Player/updatePlayer.php",
                     dataType: "json",
                     data: {
                         id: _id,
-                        guild_ID: _guild_ID
+                        guild_ID: _guild_ID,
+                        guild_name: _guild_name
                     },
                     success: function(response) {
                         console.log(response.message);
@@ -155,7 +175,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "API/updateAbility.php",
+                    url: "API/Player/updateAbility.php",
                     dataType: "json",
                     data: {
                         id: _id,
@@ -230,7 +250,7 @@
             })
 
             $("#_getGuildDetail_btn").click(function() {
-                var _guild_name = $("#_guild_name").val();
+                var _guild_name = $("#_guild_name2").val();
 
                 $.ajax({
                     type: "POST",
@@ -251,6 +271,11 @@
         </script>
     </head>
     <body>
+        <h1>Login</h1>
+        <label for="_name0">name: </label>
+        <input type="text" id="_name0" name="_name0"><br>
+        <button type="button" class="btn btn-primary" id="_login_btn">Login</button><br><br>
+
         <h1>Register player</h1>
         <label for="_name">name: </label>
         <input type="text" id="_name" name="_name"><br>
@@ -287,7 +312,9 @@
         <input type="text" id="_levels" name="_levels">
         <button type="button" class="btn btn-primary" id="_updateLevels_btn">Update</button><br>
         <label for="_guild_ID">guild_ID: </label>
-        <input type="text" id="_guild_ID" name="_guild_ID">
+        <input type="text" id="_guild_ID" name="_guild_ID"><br>
+        <label for="_guild_name">guild_name: </label>
+        <input type="text" id="_guild_name" name="_guild_name">
         <button type="button" class="btn btn-primary" id="_updateGuildID_btn">Update</button><br><br>
         
         <h1>Get Aincrad Table</h1>
@@ -302,8 +329,8 @@
         <button type="button" class="btn btn-primary" id="_getGuild_btn">Get</button><br><br>
 
         <h1>Get GuildDetail</h1>
-        <label for="_guild_name">guild_name: </label>
-        <input type="text" id="_guild_name" name="_guild_name">
+        <label for="_guild_name2">guild_name: </label>
+        <input type="text" id="_guild_name2" name="_guild_name2">
         <button type="button" class="btn btn-primary" id="_getGuildDetail_btn">Get</button><br><br>
     </body>
 </html>

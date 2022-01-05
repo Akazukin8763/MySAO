@@ -4,7 +4,6 @@
     class Message{
         public $successed;
         public $statement;
-        public $out_of_range = false;
     }
     class Info{
         public $player = array();  //考慮沒有元素的情況 也保持陣列型態
