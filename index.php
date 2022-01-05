@@ -210,6 +210,44 @@
                     }
                 })
             })
+            
+            $("#_getGuild_btn").click(function() {
+
+                $.ajax({
+                    type: "POST",
+                    url: "API/Guild/getAll.php",
+                    dataType: "json",
+                    data: {
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                        console.log(response.guildsInfo);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
+
+            $("#_getGuildDetail_btn").click(function() {
+                var _guild_name = $("#_guild_name").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "API/Guild/getGuildDetail.php",
+                    dataType: "json",
+                    data: {
+                        guild_name: _guild_name
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                        console.log(response.guildInfo);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
         </script>
     </head>
     <body>
@@ -259,5 +297,13 @@
         <label for="_level">level: </label>
         <input type="text" id="_level" name="_level">
         <button type="button" class="btn btn-primary" id="_getAincradDetail_btn">Get</button><br><br>
+        
+        <h1>Get Guild Table</h1>
+        <button type="button" class="btn btn-primary" id="_getGuild_btn">Get</button><br><br>
+
+        <h1>Get GuildDetail</h1>
+        <label for="_guild_name">guild_name: </label>
+        <input type="text" id="_guild_name" name="_guild_name">
+        <button type="button" class="btn btn-primary" id="_getGuildDetail_btn">Get</button><br><br>
     </body>
 </html>

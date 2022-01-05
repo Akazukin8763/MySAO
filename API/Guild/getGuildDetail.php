@@ -7,14 +7,14 @@
         public $out_of_range = false;
     }
     class Info{
-        public $enemy = array();  //考慮沒有元素的情況 也保持陣列型態
+        public $player = array();  //考慮沒有元素的情況 也保持陣列型態
     }
-    class Enemy{}
+    class Player{}
     $message = new Message();
-    $levelInfo = new Info();
-    //樓層與敵人資訊
-    //含有該 level的attribute 與 enemy陣列
-    //ex: levelInfo.major_area ; levelInfo.enemy[0].attack
+    $guildInfo = new Info();
+    //公會與成員資訊
+    //含有該 guild的attribute 與 player陣列
+    //ex: guildInfo.guild_ID ; guildInfo.player[0].attack
 
     function interrupt($msg){
         $msg->successed = false;
@@ -25,35 +25,34 @@
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         try{
             foreach($_POST as $key => $value) $$key = $value;
-            //輸入level
-            if(empty($level)) { $message->statement = "Empty!"; interrupt($message); }
-            if($level < 1 || $level > 100) { $out_of_range = true; interrupt($message); }
+            //輸入guild_name
+            if(empty($guild_name)) { $message->statement = "Empty!"; interrupt($message); }
 
             $sql = "SELECT *
-                    FROM aincrad
-                    WHERE levels = ?";
+                    FROM guild
+                    WHERE guild_name = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->execute(array($level));
+            $stmt->execute(array($guild_name));
             $result = $stmt->fetchAll();
 
             foreach($result[0] as $key => $value)
-                $levelInfo->$key = $value;
+                $guildInfo->$key = $value;
             
             $sql = "SELECT *
-                    FROM enemy natural left outer join ability
-                    WHERE levels = ?";
+                    FROM player natural left outer join ability
+                    WHERE guild_ID = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->execute(array($level));
+            $stmt->execute(array($guildInfo->guild_ID));
             $result = $stmt->fetchAll();
             
             for($i=0; $i<count($result); $i++) {
-                $levelInfo->enemy[] = new Enemy();
+                $guildInfo->player[] = new Player();
                 foreach($result[$i] as $key => $value)
-                    $levelInfo->enemy[$i]->$key = $value;
+                    $guildInfo->player[$i]->$key = $value;
             }
             
             $message->successed = true;
-            echo json_encode(array('message' => $message, 'levelInfo' => $levelInfo));
+            echo json_encode(array('message' => $message, 'guildInfo' => $guildInfo));
         }
         catch (Exception $e) { $message->statement = $e->getMessage(); interrupt($message); }
     }
