@@ -28,7 +28,7 @@
             $stmt->execute(array($name));
             $result = $stmt->fetchAll();
 
-            if(count($result) != 1) { $message->$nameNotExist = true; interrupt($message); }
+            if(count($result) != 1) { $message->nameNotExist = true; interrupt($message); }
             $ID = $result[0][0];
 
             $_SESSION["ID"] = $ID;
