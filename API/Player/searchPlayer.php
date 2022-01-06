@@ -1,15 +1,19 @@
 <?php
     $conn = require_once "../../config.php";
 
+    //輸入: name
+
     class Message{
         public $successed;
         public $statement;
-        public $playerNotExist = false;
+        public $name_notExist = false;
     }
     class Info{}
+
+    //輸出:
     $message = new Message();
+    //ex: message.name_notExist 得知輸入是否有效
     $playerInfo = new Info();
-    //玩家資訊
     //含有該 player的attribute 與 ability attribute
     //ex: playerInfo.attack
 
@@ -22,7 +26,6 @@
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         try{
             foreach($_POST as $key => $value) $$key = $value;
-            //輸入name
 
             $sql = "SELECT *
                     FROM player
@@ -31,7 +34,7 @@
             $stmt->execute(array($name));
             $result = $stmt->fetchAll();
 
-            if(count($result) != 1) { $message->playerNotExist = true; interrupt($message); }
+            if(count($result) != 1) { $message->name_notExist = true; interrupt($message); }
 
             foreach($result[0] as $key => $value)
                 $playerInfo->$key = $value;

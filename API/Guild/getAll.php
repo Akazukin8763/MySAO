@@ -1,12 +1,17 @@
 <?php
     $conn = require_once "../../config.php";
 
+    //輸入: 
+    
     class Message{
         public $successed;
         public $statement;
     }
     class Info{}
+    
+    //輸出:
     $message = new Message();
+    //ex: message.successed 得知是否完全成功
     $guildsInfo;
     //ex: guildsInfo[0].guild_name
 

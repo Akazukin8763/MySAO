@@ -1,12 +1,19 @@
 <?php
     $conn = require_once "../../config.php";
 
+    //輸入: (description)、(levels)、(guild_name)、(guild_ID) 皆可有可無
+    
     class Message{
         public $successed;
         public $statement;
-        public $guildNotExist = false;
+        public $levels_illegal = false;
+        public $guild_name_illegal = false;
+        //guild_ID不會由使用者輸入，所以不做防呆
     }
+    
+    //輸出:
     $message = new Message();
+    //ex: message.guild_name_illegal 得知輸入是否有效
 
     $items = array("description", "levels", "guild_ID");
 
@@ -17,12 +24,23 @@
     }
     
     session_start();
-
+    //瘋狂玩 NULL / "" / isset() / empty() 的一篇
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         try {
             foreach($_POST as $key => $value) $$key = $value;
-            //輸入: (description、levels、guild_name、guild_ID)皆可有可無
+
+            if(!isset($_SESSION["ID"])) { $message->statement = "Error: _SESSION[ID] unset!"; interrupt($message); }
             
+            if(isset($levels)){     //levels為空要擋下來，其他可以為空
+                $sql = "SELECT count(levels)
+                        FROM aincrad
+                        WHERE levels = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute(array($levels));
+                $result = $stmt->fetchAll();
+                if($result[0][0] != 1) { $message->levels_illegal = true; interrupt($message); }
+            }
+
             if(!empty($guild_name)){    //有填name，就以name優先
                 $sql = "SELECT guild_ID
                         FROM guild
@@ -30,7 +48,7 @@
                 $stmt = $conn->prepare($sql);
                 $stmt->execute(array($guild_name));
                 $result = $stmt->fetchAll();
-                if(count($result) != 1) { $message->guildNotExist = true; interrupt($message); }
+                if(count($result) != 1) { $message->guild_name_illegal = true; interrupt($message); }
                 $guild_ID = $result[0][0];
             }
             else if(isset($guild_name) && !isset($guild_ID)){    //沒填name又沒傳ID，就等同沒填ID，會離開公會
@@ -41,7 +59,8 @@
 
             foreach($items as $item){
                 if (isset($$item)){
-                    if($item == "guild_ID" && $guild_ID == "") $guild_ID = NULL;    //沒填就設為NULL，以離開公會 (不能update"")
+                    if($item == "levels" && empty($levels)) continue;   //沒填levels等同於沒給
+                    else if($item == "guild_ID" && $guild_ID == "") $guild_ID = NULL;    //沒填就設為NULL(不是真的SET"")，以離開公會
                     $sql = "UPDATE player
                             SET $item = ?
                             WHERE ID = ?";

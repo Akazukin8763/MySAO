@@ -1,18 +1,22 @@
 <?php
     $conn = require_once "../../config.php";
 
+    //輸入: guild_name
+
     class Message{
         public $successed;
         public $statement;
-        public $guildNotExist = false;
+        public $guild_name_notExist = false;
     }
     class Info{
         public $player = array();  //考慮沒有元素的情況 也保持陣列型態
     }
     class Player{}
+    
+    //輸出:
     $message = new Message();
+    //ex: message.guild_name_notExist 得知輸入是否有效
     $guildInfo = new Info();
-    //公會與成員資訊
     //含有該 guild的attribute 與 player陣列
     //ex: guildInfo.guild_ID ; guildInfo.player[0].attack
 
@@ -25,7 +29,6 @@
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         try{
             foreach($_POST as $key => $value) $$key = $value;
-            //輸入guild_name
 
             $sql = "SELECT *
                     FROM guild
@@ -34,7 +37,7 @@
             $stmt->execute(array($guild_name));
             $result = $stmt->fetchAll();
 
-            if(count($result) != 1) { $message->guildNotExist = true; interrupt($message); }
+            if(count($result) != 1) { $message->guild_name_notExist = true; interrupt($message); }
 
             foreach($result[0] as $key => $value)
                 $guildInfo->$key = $value;

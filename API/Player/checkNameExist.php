@@ -1,19 +1,18 @@
 <?php
     $conn = require_once "../../config.php";
 
-    //輸入: 
+    //輸入: name
 
     class Message{
         public $successed;
         public $statement;
+        public $name_illegal = false;
+        public $name_exist = false;
     }
-    class Info{}
-    
+
     //輸出:
     $message = new Message();
-    //ex: message.successed 得知是否完全成功
-    $levelsInfo;
-    //ex: levelsInfo[100].major_area
+    //ex: message.name_exist 得知名字是否已被使用
 
     function interrupt($msg){
         $msg->successed = false;
@@ -22,23 +21,21 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        try{
-            //foreach($_POST as $key => $value) $$key = $value;
-
-            $sql = "SELECT *
-                    FROM aincrad";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
+        try {
+            foreach($_POST as $key => $value) $$key = $value;
             
-            for($i=0; $i<count($result); $i++) {
-                $temp = new Info();
-                foreach($result[$i] as $key => $value)
-                    $temp->$key = $value;
-                $levelsInfo[] = $temp;
-            }
+            if (empty($name)){ $message->name_illegal = true; interrupt($message); }
+
+            $sql = "SELECT COUNT(name)
+                    FROM player
+                    WHERE name = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(array($name));
+            $result = $stmt->fetchAll();
+            if($result[0][0]){ $message->name_exist = true; interrupt($message); }
+
             $message->successed = true;
-            echo json_encode(array('message' => $message, 'levelsInfo' => $levelsInfo));
+            echo json_encode(array('message' => $message));
         }
         catch (Exception $e) { $message->statement = $e->getMessage(); interrupt($message); }
     }

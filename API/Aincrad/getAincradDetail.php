@@ -1,18 +1,22 @@
 <?php
     $conn = require_once "../../config.php";
 
+    //輸入: levels
+
     class Message{
         public $successed;
         public $statement;
-        public $levelNotExist = false;
+        public $levels_notExist = false;
     }
     class Info{
         public $enemy = array();  //考慮沒有元素的情況 也保持陣列型態
     }
     class Enemy{}
+    
+    //輸出:
     $message = new Message();
+    //ex: message.levels_notExist 得知輸入是否有效
     $levelInfo = new Info();
-    //樓層與敵人資訊
     //含有該 level的attribute 與 enemy陣列
     //ex: levelInfo.major_area ; levelInfo.enemy[0].attack
 
@@ -25,16 +29,15 @@
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         try{
             foreach($_POST as $key => $value) $$key = $value;
-            //輸入level
 
             $sql = "SELECT *
                     FROM aincrad
                     WHERE levels = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->execute(array($level));
+            $stmt->execute(array($levels));
             $result = $stmt->fetchAll();
 
-            if(count($result) != 1) { $message->levelNotExist = true; interrupt($message); }
+            if(count($result) != 1) { $message->levels_notExist = true; interrupt($message); }
 
             foreach($result[0] as $key => $value)
                 $levelInfo->$key = $value;
@@ -43,7 +46,7 @@
                     FROM enemy natural left outer join ability
                     WHERE levels = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->execute(array($level));
+            $stmt->execute(array($levels));
             $result = $stmt->fetchAll();
             
             for($i=0; $i<count($result); $i++) {
