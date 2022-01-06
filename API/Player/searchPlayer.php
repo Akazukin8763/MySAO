@@ -28,7 +28,7 @@
             foreach($_POST as $key => $value) $$key = $value;
 
             $sql = "SELECT *
-                    FROM player
+                    FROM player natural join ability
                     WHERE name = ?";
             $stmt = $conn->prepare($sql);
             $stmt->execute(array($name));
@@ -37,16 +37,6 @@
             if(count($result) != 1) { $message->name_notExist = true; interrupt($message); }
 
             foreach($result[0] as $key => $value)
-                $playerInfo->$key = $value;
-            
-            $sql = "SELECT *
-                    FROM ability
-                    WHERE ID = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute(array($playerInfo->ID));
-            $result = $stmt->fetchAll();
-            
-            for($i=0; $i<count($result); $i++)
                 $playerInfo->$key = $value;
             
             $message->successed = true;
