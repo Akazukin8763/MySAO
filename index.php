@@ -269,6 +269,7 @@
                     success: function(response) {
                         console.log(response.message);
                         console.log(response.guildInfo);
+                        console.log(response.memberDistribution);
                     },
                     error: function(jqXHR) {
                         console.log(jqXHR);
