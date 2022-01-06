@@ -26,7 +26,6 @@
         try{
             foreach($_POST as $key => $value) $$key = $value;
             //輸入guild_name
-            if(empty($guild_name)) { $message->statement = "Empty!"; interrupt($message); }
 
             $sql = "SELECT *
                     FROM guild

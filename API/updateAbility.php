@@ -1,4 +1,5 @@
 <?php
+    //元老的範例程式
     $conn = require_once "../config.php";
 
     class Message{

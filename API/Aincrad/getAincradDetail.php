@@ -4,7 +4,7 @@
     class Message{
         public $successed;
         public $statement;
-        public $out_of_range = false;
+        public $levelNotExist = false;
     }
     class Info{
         public $enemy = array();  //考慮沒有元素的情況 也保持陣列型態
@@ -26,8 +26,6 @@
         try{
             foreach($_POST as $key => $value) $$key = $value;
             //輸入level
-            if(empty($level)) { $message->statement = "Empty!"; interrupt($message); }
-            if($level < 1 || $level > 100) { $message->out_of_range = true; interrupt($message); }
 
             $sql = "SELECT *
                     FROM aincrad
@@ -35,6 +33,8 @@
             $stmt = $conn->prepare($sql);
             $stmt->execute(array($level));
             $result = $stmt->fetchAll();
+
+            if(count($result) != 1) { $message->levelNotExist = true; interrupt($message); }
 
             foreach($result[0] as $key => $value)
                 $levelInfo->$key = $value;

@@ -80,19 +80,19 @@
                 })
             })
 
-            $("#_getAbility_btn").click(function() {
+            $("#_searchPlayer_btn").click(function() {
                 var _name = $("#_name2").val();
                 
                 $.ajax({
                     type: "POST",
-                    url: "API/getAbility.php",
+                    url: "API/Player/searchPlayer.php",
                     dataType: "json",
                     data: {
                         name: _name
                     },
                     success: function(response) {
-                        console.log(response.ability);
                         console.log(response.message);
+                        console.log(response.playerInfo);
                     },
                     error: function(jqXHR) {
                         console.log(jqXHR);
@@ -297,10 +297,10 @@
         <button type="button" class="btn btn-primary" id="_registerAbility_btn">Register</button>
         <button type="button" class="btn btn-primary" id="_updateAbility_btn">Update</button><br><br>
         
-        <h1>Get ability</h1>
+        <h1>searchPlayer</h1>
         <label for="_name2">name: </label>
         <input type="text" id="_name2" name="_name2"><br>
-        <button type="button" class="btn btn-primary" id="_getAbility_btn">Get</button><br><br>
+        <button type="button" class="btn btn-primary" id="_searchPlayer_btn">Get</button><br><br>
 
         <h1>Update player</h1>
         <label for="_id2">ID: </label>
