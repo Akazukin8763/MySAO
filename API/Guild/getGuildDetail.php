@@ -17,7 +17,7 @@
         public $num;
         function __construct($lv, $num){
             $this->lv = $lv;
-            $this->num = $num;
+            $this->num = $num;  
         }
     }
     
@@ -28,7 +28,8 @@
     //含有該 guild的attribute 與 player陣列
     //ex: guildInfo.guild_ID ; guildInfo.player[0].attack
     $memberDistribution = array();
-    //ex: memberDistribution[0]
+    //記錄有人的樓層與成員人數
+    //ex: memberDistribution[0].lv ; memberDistribution[0].num
 
     function interrupt($msg){
         $msg->successed = false;
