@@ -68,7 +68,7 @@ function loginMenu() {
         
             $.ajax({
                 type: "POST",
-                url: "API/getAbility.php",
+                url: "API/Player/login.php",
                 dataType: "json",
                 data: {
                     name: __name
@@ -78,7 +78,7 @@ function loginMenu() {
                         linkOver();
                     }
                     else {
-                        $("#loginERR").html(response.message.statement);
+                        $("#loginERR").html("Account not existed");
                     }
                 },
                 error: function(jqXHR) {
