@@ -1,16 +1,12 @@
 // https://www.chartjs.org/docs/latest/
-export function showGraph(target, attack = 0, health = 0, defense = 0, reaction = 0, agile = 0) {
-
-    var label = ["1", "2", "3"];
-    var val = [10, 20, 30];
-
+export function showGraph(target, levels, nums) {
     new Chart(target, {
         type: 'bar',
         data: {
-            labels: label,
+            labels: levels,
             datasets: [{
                 label: 'Guild',
-                data: val,
+                data: nums,
                 fill: true,
 
                 backgroundColor: function(context) { return context.dataIndex % 2 ? 'rgba(135, 220, 233, 0.4)' : 'rgba(135, 220, 233, 0.2)'; },

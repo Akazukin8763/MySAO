@@ -52,7 +52,9 @@
         </style>
 
         <script type="module">
-            var name;
+            import * as ajax from "./js/ajax.js";
+
+            let name;
 
             window.addEventListener("load", function(event) {
                 $("#register").modal("show");
@@ -61,6 +63,7 @@
                 //$("#registerDefenseTest").modal("show");
                 //$("#registerReactionTest").modal("show");
                 //$("#registerAgileTest").modal("show");
+                //$("#testResult").modal("show");
             });
 
             // Username Input
@@ -82,64 +85,96 @@
                 return true;
             }
 
-            /*
-            Register Username
-            */
+            // Register Username
             // Back Button
             $("#registerBack").click(function() {
                 history.go(-1);
             });
-
             // Next Button
             $("#registerNext").click(function() {
                 name = $("#registerUsername").val();
 
                 if (usernameCheck(name)) {
-                    $("#register").modal("hide");
-                    $("#registerAttackTest").modal("show");
+                    ajax.ajax_checkNameExist(name).then(function(response) {
+                        if (response.message.successed) {
+                            $("#register").modal("hide");
+                            $("#registerAttackTest").modal("show");
+                        }
+                        else {
+                            $("#registerUsernameERR").html("This name has been taken.");
+                        }
+                    }).catch(function(jqXHR) {
+                        $("#registerUsernameERR").html("伺服器連線錯誤。");
+                    });
+
                 }
             });
 
-            /*
-            Attack Test
-            */
+            // Attack Test 
             // https://www.youtube.com/watch?v=h8mqCy-KK0Y
             import * as attack from "./js/register/attackTest.js";
             $("#attackStart").click(function() {
                 attack.start();
             });
 
-            /*
-            Health Test
-            */
+            // Health Test
             import * as health from "./js/register/healthTest.js";
             $("#healthStart").click(function() {
                 health.start();
             })
 
-            /*
-            Defense Test
-            */
+            // Defense Test
             import * as defense from "./js/register/defenseTest.js";
             $("#defenseStart").click(function() {
                 defense.start();
             })
 
-            /*
-            Reaction Test
-            */
+            // Reaction Test
             import * as reaction from "./js/register/reactionTest.js";
             $("#reactionStart").click(function() {
                 reaction.start();
             })
 
-            /*
-            Agile Test
-            */
+            // Agile Test
             import * as agile from "./js/register/agileTest.js";
             $("#agileStart").click(function() {
                 agile.start();
             })
+
+            // Result
+            import { showGraph } from "./js/ability/showGraph.js";
+            $("#testResult").on("show.bs.modal", function () {
+                $("#resultName").html(name + "'s Testing Result");
+
+                let attack = $("#abilityAttack").val();
+                let health = $("#abilityHealth").val();
+                let defense = $("#abilityDefense").val();
+                let reaction = $("#abilityReaction").val();
+                let agile = $("#abilityAgile").val();
+                showGraph($("#resultChart"), attack, health, defense, reaction, agile);
+            });
+            $("#login").click(function() {
+                let attack = $("#abilityAttack").val();
+                let health = $("#abilityHealth").val();
+                let defense = $("#abilityDefense").val();
+                let reaction = $("#abilityReaction").val();
+                let agile = $("#abilityAgile").val();
+
+                ajax.ajax_registerPlayer(name, attack, health, defense, reaction, agile).then(function(response) {
+                    if (response.message.successed) {
+                        location.href = "index.php";
+                    }
+                    else {
+                        alert("Register Failed...");
+                        location.reload();
+                    }
+                }).catch(function(jqXHR) {
+                    alert("Register Failed...");
+                    location.reload();
+                });
+
+                //location.href = "index.php";
+            });
         </script>
     </head>
     <body >
@@ -300,6 +335,30 @@
                     </div>
                 </div>
                 <input type="text" value="0" id="abilityAgile" style="display: none;"></input> <!-- Save Agile -->
+            </div>
+
+            <!-- Test Result -->
+            <div class="modal fade" id="testResult" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="testResult" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content header-gradient">
+                        <!-- Result Header -->
+                        <div class="modal-header justify-content-center">
+                            <span class="modal-title" id="resultName"></span>
+                        </div>
+                        <!-- Result Body -->
+                        <div class="modal-body">
+                            <div class="row">
+                                <canvas id="resultChart">
+                                    <!-- Nothing -->
+                                </canvas>
+                            </div>
+                        </div>
+                        <!-- Result Footer -->
+                        <div class="modal-footer justify-content-center" id="agileResult">
+                            <button type="button" class="btn btn-outline-light" id="login">Login</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

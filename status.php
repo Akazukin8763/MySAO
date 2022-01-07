@@ -1,3 +1,19 @@
+<?php
+    session_start();
+
+    if (isset($_SESSION["ID"])) {
+        $ID = $_SESSION["ID"];
+        $username = $_SESSION["username"];
+
+        setcookie("ID", $ID);
+        setcookie("username", $username);
+    }
+    else {
+        header('location: index.php');
+        exit;
+    }
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -74,54 +90,97 @@
         </style>
 
         <script type="module">
-            import * as ability from "./js/ability/showGraph.js";
-            function setStatus() {
-                var __name = "桐谷和人";
-        
-                $.ajax({
-                    type: "POST",
-                    url: "API/getAbility.php",
-                    dataType: "json",
-                    data: {
-                        name: __name
-                    },
-                    success: function(response) {
-                        if (response.message.successed) {
-                            var attack = response.ability.attack;
-                            var health = response.ability.health;
-                            var defense = response.ability.defense;
-                            var reaction = response.ability.reaction;
-                            var agile = response.ability.agile;
-                            
-                            ability.showGraph($("#abilityChart"), attack, health, defense, reaction, agile);
-                            $("#attack").html(attack);
-                            $("#health").html(health);
-                            $("#defense").html(defense);
-                            $("#reaction").html(reaction);
-                            $("#agile").html(agile);
-                        }
-                        else {
-                            console.log(response.message.statement);
-                        }
-                    },
-                    error: function(jqXHR) {
-                        console.log(jqXHR);
-                    }
-                })
-            }
+            import { getCookie } from "./js/cookie.js";
+            import * as ajax from "./js/ajax.js";
 
+            let __level = 1; // Default
+            let __ID = getCookie("ID");
+            let __name = getCookie("username");
+
+            // Ability, Guild
+            import * as ability from "./js/ability/showGraph.js";
             import * as guild from "./js/guild/showGraph.js";
-            function setGuild() {
-                guild.showGraph($("#guildChart"), 0, 10, 30, 15, 20);
+            function setStatus() {
+                ajax.ajax_searchPlayer(__name).then(function(response) {
+                    if (response.message.successed) {
+                        let playerInfo = response.playerInfo;
+
+                        // Ability
+                        let attack = playerInfo.attack;
+                        let health = playerInfo.health;
+                        let defense = playerInfo.defense;
+                        let reaction = playerInfo.reaction;
+                        let agile = playerInfo.agile;
+                        
+                        ability.showGraph($("#abilityChart"), attack, health, defense, reaction, agile);
+                        $("#attack").html(attack);
+                        $("#health").html(health);
+                        $("#defense").html(defense);
+                        $("#reaction").html(reaction);
+                        $("#agile").html(agile);
+
+                        // Description
+                        let description = playerInfo.description;
+
+                        $("#descriptionArea").html(description);
+
+                        // Aincrad
+                        __level = playerInfo.levels;
+
+                        setLevel(__level);
+
+                        // Guild
+                        let __guild_name = playerInfo.guild_name;
+
+                        ajax.ajax_getGuildDetail(__guild_name).then(function(response) {
+                            console.log(response);
+                            if (response.message.successed) {
+                                let detail = new Map();
+
+                                response.memberDistribution.forEach(function(element) {
+                                    detail.set(element.lv, element.num);
+                                });
+
+                                $("#guildName").html(__guild_name);
+                                guild.showGraph($("#guildChart"), [...detail.keys()], [...detail.values()]);
+                            }
+                            else { // 沒有公會則只顯示自己
+                                $("#guildName").html("[None]");
+                                guild.showGraph($("#guildChart"), [__level], [1]);
+                            }
+                        }).catch(function(jqXHR) { // 錯誤則只顯示自己
+                            $("#guildName").html("[None]");
+                            guild.showGraph($("#guildChart"), [__level], [1]);
+                        });
+                    }
+                    else {
+                        //location.href = "main.php";
+                    }
+                }).catch(function(jqXHR) {
+                    location.href = "main.php";
+                });
             }
 
             // Description Update
             $("#descriptionArea").parent().dblclick(function() {
                 $("#descriptionArea").prop('disabled', false);
                 $("#descriptionArea").focus();
+                $("#descriptionERR").html("");
             })
             $("#descriptionArea").focusout(function() {
                 $("#descriptionArea").prop('disabled', true);
+
+                let __description = $("#descriptionArea").val();
+                ajax.ajax_updatePlayer_description(__description).then(function(response) {
+                    if (response.message.successed) {
+                        // Nothing
+                    }
+                    else {
+                        $("#descriptionERR").html(response.message.statement);
+                    }
+                }).catch(function(jqXHR) {
+                    $("#descriptionERR").html("伺服器連線錯誤。");
+                });
             })
 
             // Level Selector
@@ -129,18 +188,20 @@
             let size = 42; // font size (px)
             let classList = [ 'visible', 'close', 'far', 'far', 'distant', 'distant' ];
 
-            let counter = 1;
+            $("#moreAincrad").click(function() {
+                location.href = "aincrad.php?index=" + Math.floor((__level - 1) / 10);
+            });
             $("#aincradLevelPrev").click(function() {
-                counter = (counter + 98) % 100 + 1;
-                setLevel(counter);
+                __level = (__level + 98) % 100 + 1;
+                setLevel(__level);
             });
             $("#aincradLevelNext").click(function() {
-                counter = counter % 100 + 1;
-                setLevel(counter);
+                __level = __level % 100 + 1;
+                setLevel(__level);
             });
-            function setLevel(counter) {
+            function setLevel(__level) {
                 let columns = [...document.getElementsByClassName('column')];
-                let num = ("000" + counter).slice(-3);
+                let num = ("000" + __level).slice(-3);
 
                 columns.forEach((ele, i) => {
                     let n = +num[i];
@@ -151,6 +212,8 @@
                         ele2.className = 'num ' + getClass(n, i2);
                     });
                 });
+
+                $("#aincradLevel").html("#" + __level);
             }
             function getClass(n, i2) {
                 return classList.find((class_, classIndex) => Math.abs(n - i2) === classIndex) || '';
@@ -158,9 +221,23 @@
 
             // Window Load
             window.addEventListener("load", function(event) {
+                $("#playerID").html("#" + __ID);
+                $("#playerName").html(__name);
+
                 setStatus();
-                setGuild();
-                setLevel(counter);
+            });
+            window.addEventListener("beforeunload", function(event) {
+                // 離開時才更新資料庫
+                ajax.ajax_updatePlayer_level(__level).then(function(response) {
+                    if (response.message.successed) {
+                        // Nothing
+                    }
+                    else {
+                        console.log(response.message.statement);
+                    }
+                }).catch(function(jqXHR) {
+                    console.log(jqXHR)
+                });
             });
         </script>
     </head>
@@ -210,8 +287,8 @@
                         <div class="card header-gradient" style="height: 86vh">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span id="playerID">#CR000001</span>
-                                    <span id="playerNmae">桐谷和人</span>
+                                    <span id="playerID"></span>
+                                    <span id="playerName"></span>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -260,7 +337,7 @@
                                         <i class="bi bi-lightbulb"></i>
                                         Double-click on textarea to edit description.
                                     </span>
-                                    <span id="descriptionERR" style="color: rgb(200, 0, 0)">(ERR-TEXT-TEMP)</span>
+                                    <span id="descriptionERR" style="color: rgb(200, 0, 0)"></span>
                                 </div>
                             </div>
                         </div>
@@ -273,21 +350,21 @@
                                     <div class="card-header">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span>Aincrad</span>
-                                            <span id="aincradLevel">#1</span>
+                                            <span id="aincradLevel"></span>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="column">
                                             <div class="num">0</div>
                                             <div class="num">1</div>
-                                            <div class="num">2</div>
-                                            <div class="num">3</div>
-                                            <div class="num">4</div>
-                                            <div class="num">5</div>
-                                            <div class="num">6</div>
-                                            <div class="num">7</div>
-                                            <div class="num">8</div>
-                                            <div class="num">9</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
                                         </div>
                                         <div class="column">
                                             <div class="num">0</div>
@@ -324,7 +401,7 @@
                                         </button>
                                     </div>
                                     <div class="card-footer">
-                                        <a class="btn btn-sm btn-outline-dark w-100" href="aincrad.php">Click here to see more Information</a>
+                                        <a class="btn btn-sm btn-outline-dark w-100" id="moreAincrad">Click here to see more Information</a>
                                     </div>
                                 </div>
                             </div>
@@ -334,7 +411,7 @@
                                     <div class="card-header">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span>Guild</span>
-                                            <span id="guildName">Unknown...</span>
+                                            <span id="guildName"></span>
                                         </div>
                                     </div>
                                     <div class="card-body">

@@ -192,10 +192,7 @@
                             </div>
                             <h5>Mobs</h5>
                             <div id="mobs">
-                                <span style="font-weight: bold">金牛上將巴蘭</span>
-                                <p>金牛族能連續使出產生麻痹效果的劍技「麻痹衝擊」和「麻痹爆破」。</p>
-                                <span style="font-weight: bold">金牛上校納托</span>
-                                <p>金牛族能連續使出產生麻痹效果的劍技「麻痹衝擊」和「麻痹爆破」。</p>
+                                <!-- Nothing -->
                             </div>
                         </div>
                         <!-- Enemy Footer -->

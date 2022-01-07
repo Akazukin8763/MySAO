@@ -58,7 +58,7 @@ export function start() {
     next.prop("disabled", true);
     next.click(function() {
         $("#registerAgileTest").modal("hide");
-        //$("#registerHealthTest").modal("show");
+        $("#testResult").modal("show");
     });
 
     result.removeClass("justify-content-center");
@@ -132,7 +132,7 @@ export function start() {
             const reaction = $("#abilityReaction").val();
             const agile = score;
             showGraph(chart, attack, health, defense, reaction, agile);
-            $("#abilityAttack").val(score);
+            $("#abilityAgile").val(score);
 
             next.prop("disabled", false);
             testing.off("click");
