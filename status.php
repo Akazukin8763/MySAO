@@ -91,57 +91,74 @@
 
         <script type="module">
             import { getCookie } from "./js/cookie.js";
+            import * as ajax from "./js/ajax.js";
 
-            let level = 1; // Default
+            let __level = 1; // Default
             let __ID = getCookie("ID");
             let __name = getCookie("username");
 
-            // Ability
+            // Ability, Guild
             import * as ability from "./js/ability/showGraph.js";
+            import * as guild from "./js/guild/showGraph.js";
             function setStatus() {
-                $.ajax({
-                    type: "POST",
-                    url: "API/Player/searchPlayer.php",
-                    dataType: "json",
-                    data: {
-                        name: __name
-                    },
-                    success: function(response) {
-                        if (response.message.successed) {
-                            let playerInfo = response.playerInfo;
+                ajax.ajax_searchPlayer(__name).then(function(response) {
+                    if (response.message.successed) {
+                        let playerInfo = response.playerInfo;
 
-                            // Ability
-                            let attack = playerInfo.attack;
-                            let health = playerInfo.health;
-                            let defense = playerInfo.defense;
-                            let reaction = playerInfo.reaction;
-                            let agile = playerInfo.agile;
-                            
-                            ability.showGraph($("#abilityChart"), attack, health, defense, reaction, agile);
-                            $("#attack").html(attack);
-                            $("#health").html(health);
-                            $("#defense").html(defense);
-                            $("#reaction").html(reaction);
-                            $("#agile").html(agile);
+                        // Ability
+                        let attack = playerInfo.attack;
+                        let health = playerInfo.health;
+                        let defense = playerInfo.defense;
+                        let reaction = playerInfo.reaction;
+                        let agile = playerInfo.agile;
+                        
+                        ability.showGraph($("#abilityChart"), attack, health, defense, reaction, agile);
+                        $("#attack").html(attack);
+                        $("#health").html(health);
+                        $("#defense").html(defense);
+                        $("#reaction").html(reaction);
+                        $("#agile").html(agile);
 
-                            // Description
-                            let description = playerInfo.description;
+                        // Description
+                        let description = playerInfo.description;
 
-                            $("#descriptionArea").html(description);
+                        $("#descriptionArea").html(description);
 
-                            // Aincrad
-                            level = playerInfo.levels;
+                        // Aincrad
+                        __level = playerInfo.levels;
 
-                            setLevel(level)
-                        }
-                        else {
-                            location.href = "main.php";
-                        }
-                    },
-                    error: function(jqXHR) {
-                        location.href = "main.php";
+                        setLevel(__level);
+
+                        // Guild
+                        let __guild_name = playerInfo.guild_name;
+
+                        ajax.ajax_getGuildDetail(__guild_name).then(function(response) {
+                            console.log(response);
+                            if (response.message.successed) {
+                                let detail = new Map();
+
+                                response.memberDistribution.forEach(function(element) {
+                                    detail.set(element.lv, element.num);
+                                });
+
+                                $("#guildName").html(__guild_name);
+                                guild.showGraph($("#guildChart"), [...detail.keys()], [...detail.values()]);
+                            }
+                            else { // 沒有公會則只顯示自己
+                                $("#guildName").html("[None]");
+                                guild.showGraph($("#guildChart"), [__level], [1]);
+                            }
+                        }).catch(function(jqXHR) { // 錯誤則只顯示自己
+                            $("#guildName").html("[None]");
+                            guild.showGraph($("#guildChart"), [__level], [1]);
+                        });
                     }
-                })
+                    else {
+                        //location.href = "main.php";
+                    }
+                }).catch(function(jqXHR) {
+                    location.href = "main.php";
+                });
             }
 
             // Description Update
@@ -154,26 +171,16 @@
                 $("#descriptionArea").prop('disabled', true);
 
                 let __description = $("#descriptionArea").val();
-
-                $.ajax({
-                    type: "POST",
-                    url: "API/Player/updatePlayer.php",
-                    dataType: "json",
-                    data: {
-                        description: __description
-                    },
-                    success: function(response) {
-                        if (response.message.successed) {
-                            // Nothing
-                        }
-                        else {
-                            $("#descriptionERR").html(response.message.statement);
-                        }
-                    },
-                    error: function(jqXHR) {
-                        $("#descriptionERR").html("伺服器連線錯誤。");
+                ajax.ajax_updatePlayer_description(__description).then(function(response) {
+                    if (response.message.successed) {
+                        // Nothing
                     }
-                })
+                    else {
+                        $("#descriptionERR").html(response.message.statement);
+                    }
+                }).catch(function(jqXHR) {
+                    $("#descriptionERR").html("伺服器連線錯誤。");
+                });
             })
 
             // Level Selector
@@ -182,19 +189,19 @@
             let classList = [ 'visible', 'close', 'far', 'far', 'distant', 'distant' ];
 
             $("#moreAincrad").click(function() {
-                location.href = "aincrad.php?index=" + Math.floor((level - 1) / 10);
+                location.href = "aincrad.php?index=" + Math.floor((__level - 1) / 10);
             });
             $("#aincradLevelPrev").click(function() {
-                level = (level + 98) % 100 + 1;
-                setLevel(level);
+                __level = (__level + 98) % 100 + 1;
+                setLevel(__level);
             });
             $("#aincradLevelNext").click(function() {
-                level = level % 100 + 1;
-                setLevel(level);
+                __level = __level % 100 + 1;
+                setLevel(__level);
             });
-            function setLevel(level) {
+            function setLevel(__level) {
                 let columns = [...document.getElementsByClassName('column')];
-                let num = ("000" + level).slice(-3);
+                let num = ("000" + __level).slice(-3);
 
                 columns.forEach((ele, i) => {
                     let n = +num[i];
@@ -206,15 +213,10 @@
                     });
                 });
 
-                $("#aincradLevel").html("#" + level);
+                $("#aincradLevel").html("#" + __level);
             }
             function getClass(n, i2) {
                 return classList.find((class_, classIndex) => Math.abs(n - i2) === classIndex) || '';
-            }
-
-            import * as guild from "./js/guild/showGraph.js";
-            function setGuild() {
-                guild.showGraph($("#guildChart"), 0, 10, 30, 15, 20);
             }
 
             // Window Load
@@ -223,29 +225,19 @@
                 $("#playerName").html(__name);
 
                 setStatus();
-                setGuild();
             });
             window.addEventListener("beforeunload", function(event) {
                 // 離開時才更新資料庫
-                $.ajax({
-                    type: "POST",
-                    url: "API/Player/updatePlayer.php",
-                    dataType: "json",
-                    data: {
-                        levels: level
-                    },
-                    success: function(response) {
-                        if (response.message.successed) {
-                            // Nothing
-                        }
-                        else {
-                            console.log(response.message.statement);
-                        }
-                    },
-                    error: function(jqXHR) {
-                        console.log(jqXHR);
+                ajax.ajax_updatePlayer_level(__level).then(function(response) {
+                    if (response.message.successed) {
+                        // Nothing
                     }
-                })
+                    else {
+                        console.log(response.message.statement);
+                    }
+                }).catch(function(jqXHR) {
+                    console.log(jqXHR)
+                });
             });
         </script>
     </head>
@@ -365,14 +357,14 @@
                                         <div class="column">
                                             <div class="num">0</div>
                                             <div class="num">1</div>
-                                            <div class="num">2</div>
-                                            <div class="num">3</div>
-                                            <div class="num">4</div>
-                                            <div class="num">5</div>
-                                            <div class="num">6</div>
-                                            <div class="num">7</div>
-                                            <div class="num">8</div>
-                                            <div class="num">9</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
+                                            <div class="num">&zwnj;</div>
                                         </div>
                                         <div class="column">
                                             <div class="num">0</div>
