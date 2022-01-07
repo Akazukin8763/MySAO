@@ -53,12 +53,8 @@
             foreach($result[0] as $key => $value)
                 $guildInfo->$key = $value;
             
-            $num_inLevels = array();
-            for($i=0; $i<=100; $i++)
-                $num_inLevels[] = 0;
-            
             $sql = "SELECT *
-                    FROM player natural left outer join ability
+                    FROM player natural join ability
                     WHERE guild_ID = ?";
             $stmt = $conn->prepare($sql);
             $stmt->execute(array($guildInfo->guild_ID));
@@ -68,13 +64,18 @@
                 $guildInfo->player[] = new Player();
                 foreach($result[$i] as $key => $value)
                     $guildInfo->player[$i]->$key = $value;
-                $num_inLevels[$result[$i]['levels']]++;
             }
 
-            for($i=1; $i<=100; $i++){
-                if($num_inLevels[$i])
-                    $memberDistribution[] = new Distribution($i, $num_inLevels[$i]);
-            }
+            $sql = "SELECT levels as lv, COUNT(levels) as num
+                    FROM player
+                    WHERE guild_ID = ?
+                    GROUP BY levels;";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(array($guildInfo->guild_ID));
+            $result = $stmt->fetchAll();
+
+            foreach($result as $dstr)
+                $memberDistribution[] = new Distribution($dstr['lv'], $dstr['num']);
             
             $message->successed = true;
             echo json_encode(array('message' => $message, 'guildInfo' => $guildInfo, 'memberDistribution' => $memberDistribution));
