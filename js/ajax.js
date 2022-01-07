@@ -2,6 +2,51 @@
  * Player
  */
 
+// checkNameExist
+export function ajax_checkNameExist(__name) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: "API/Player/checkNameExist.php",
+            dataType: "json",
+            data: {
+                name: __name
+            },
+            success: function(response) {
+                resolve(response)
+            },
+            error: function(jqXHR) {
+                reject(jqXHR)
+            }
+        })
+    });
+}
+
+// registerPlayer
+export function ajax_registerPlayer(__name, __attack, __health, __defense, __reaction, __agile) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: "API/Player/registerPlayer.php",
+            dataType: "json",
+            data: {
+                name: __name,
+                attack: __attack,
+                health: __health,
+                defense: __defense,
+                reaction: __reaction,
+                agile: __agile
+            },
+            success: function(response) {
+                resolve(response)
+            },
+            error: function(jqXHR) {
+                reject(jqXHR)
+            }
+        })
+    });
+}
+
 // searchPlayer
 export function ajax_searchPlayer(__name) {
     return new Promise(function(resolve, reject) {
