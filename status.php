@@ -411,7 +411,7 @@
                                     <div class="card-header">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span>Guild</span>
-                                            <span id="guildName">Unknown...</span>
+                                            <span id="guildName"></span>
                                         </div>
                                     </div>
                                     <div class="card-body">
