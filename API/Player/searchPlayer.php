@@ -28,7 +28,7 @@
             foreach($_POST as $key => $value) $$key = $value;
 
             $sql = "SELECT *
-                    FROM (player natural join ability) join guild using (guild_ID)
+                    FROM player natural join ability left outer join guild using (guild_ID)
                     WHERE name = ?";
             $stmt = $conn->prepare($sql);
             $stmt->execute(array($name));
