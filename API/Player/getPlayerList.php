@@ -1,7 +1,8 @@
 <?php
     $conn = require_once "../../config.php";
 
-    //輸入: (orderBy) 預設ID
+    //輸入: (orderBy) 預設'ID'
+    //ex: orderBy: 'agile'
 
     class Message{
         public $successed;
@@ -14,7 +15,7 @@
     //ex: message.name_notExist 得知輸入是否有效
     $playerList = array();
     //含有所有玩家的 ID、name
-    //ex: playerList.name
+    //ex: playerList[0].name
 
     function interrupt($msg){
         $msg->successed = false;
