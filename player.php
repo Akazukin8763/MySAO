@@ -76,7 +76,6 @@
             import * as ability from "./js/ability/showGraph.js";
             function searchPlayer(searchName) {
                 ajax.ajax_searchPlayer(searchName).then(function(response) {
-                    console.log(response);
                     if (response.message.successed) {
                         $("#searchName").val("");
 
@@ -128,8 +127,8 @@
                     ability.showGraph(chart, null, null, null, null, null);
 
                     $("#descriptionArea").html("");
-                    $("#aincradLevel").html("");
-                    $("#guildName").html("");
+                    $("#aincradLevel").html("#0");
+                    $("#guildName").html("[None]");
                 }
             }
 
@@ -139,6 +138,8 @@
             });
 
             // Window Load
+            import { setList } from "./js/player/setList.js";
+            import { resetPlayer } from "./js/player/showPlayer.js";
             window.addEventListener("load", function(event) {
                 $("#currentUsername").html(__name);
                 $("#selfData").html("#" + __ID + "　｜　" + __name)
@@ -146,6 +147,9 @@
                 $("#abilityChart").empty();
                 let chart = $("<canvas></canvas>").appendTo($("#abilityChart"));
                 ability.showGraph(chart, null, null, null, null, null);
+
+                setList();
+                resetPlayer();
             });
         </script>
     </head>
@@ -211,24 +215,7 @@
                                 <hr>
 
                                 <div class="row" id="allPlayer">
-                                    <div class="col-sm-6">
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                        <li class="list-group-item">An item</li><br>
-                                    </div>
+                                    <!-- Nothing -->
                                 </div>
                             </ul>
                         </div>
@@ -237,20 +224,8 @@
 
                         <div style="height: 4vh">
                             <nav class="d-flex justify-content-center">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
+                                <ul class="pagination" id="pageSelect">
+                                    <!-- Nothing -->
                                 </ul>
                             </nav>
                         </div>
@@ -271,13 +246,16 @@
                                 <div class="d-flex justify-content-center text-center">
                                     <textarea class="form-control" id="descriptionArea" style="background-color: inherit; height: 100%;" disabled></textarea>
                                 </div>
-                                <br>
-                                <div class="d-flex justify-content-center text-center">
-                                    <span class="col-sm-3">Aincrad</span>
-                                    <span class="col-sm-3" id="aincradLevel"></span>
-                                    ｜
-                                    <span class="col-sm-3">Guild</span>
-                                    <span class="col-sm-3" id="guildName"></span>
+
+                                <div style="height: 1vh;"></div>
+
+                                <div class="d-flex justify-content-evenly text-center">
+                                    <span class="col-sm-6">Aincrad</span>
+                                    <span class="col-sm-6" id="aincradLevel">#0</span>
+                                </div>
+                                <div class="d-flex justify-content-evenly text-center">
+                                    <span class="col-sm-6">Guild</span>
+                                    <span class="col-sm-6" id="guildName">[None]</span>
                                 </div>
                             </div>
                         </div>
