@@ -47,6 +47,25 @@ export function ajax_registerPlayer(__name, __attack, __health, __defense, __rea
     });
 }
 
+// showAllPlayer
+export function ajax_getPlayerList() {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: "API/Player/getPlayerList.php",
+            dataType: "json",
+            data: {
+            },
+            success: function(response) {
+                resolve(response)
+            },
+            error: function(jqXHR) {
+                reject(jqXHR)
+            }
+        })
+    });
+}
+
 // searchPlayer
 export function ajax_searchPlayer(__name) {
     return new Promise(function(resolve, reject) {
@@ -111,8 +130,24 @@ export function ajax_updatePlayer_level(__levels) {
  * Aincrad
  */
 
-//
-
+// getDescription
+export function ajax_getDescription() {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: "API/Aincrad/getDescription.php",
+            dataType: "json",
+            data: {
+            },
+            success: function(response) {
+                resolve(response)
+            },
+            error: function(jqXHR) {
+                reject(jqXHR)
+            }
+        });
+    });
+}
 
 /**
  * Guild
