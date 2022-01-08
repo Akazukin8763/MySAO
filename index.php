@@ -276,6 +276,46 @@
                     }
                 })
             })
+            
+            $("#_getPlayerList_btn").click(function() {
+                var _orderBy = $("#_orderBy").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "API/Player/getPlayerList.php",
+                    dataType: "json",
+                    data: {
+                        orderBy: _orderBy
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                        console.log(response.playerList);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
+            
+            $("#_createGuild_btn").click(function() {
+                var _guild_name = $("#_guild_name3").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "API/Guild/createGuild.php",
+                    dataType: "json",
+                    data: {
+                        guild_name: _guild_name
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                        console.log(response.guild_ID);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
         </script>
     </head>
     <body>
@@ -348,5 +388,15 @@
         <label for="_guild_name2">guild_name: </label>
         <input type="text" id="_guild_name2" name="_guild_name2">
         <button type="button" class="btn btn-primary" id="_getGuildDetail_btn">Get</button><br><br>
+        
+        <h1>Get PlayerList</h1>
+        <label for="_orderBy">orderBy: </label>
+        <input type="text" id="_orderBy" name="_orderBy">
+        <button type="button" class="btn btn-primary" id="_getPlayerList_btn">Get</button><br><br>
+        
+        <h1>Create Guild</h1>
+        <label for="_guild_name3">guild_name: </label>
+        <input type="text" id="_guild_name3" name="_guild_name3">
+        <button type="button" class="btn btn-primary" id="_createGuild_btn">Create</button><br><br>
     </body>
 </html>
