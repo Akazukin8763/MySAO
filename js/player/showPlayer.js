@@ -5,8 +5,6 @@ var currentPage = 0;
 
 export function resetPlayer() {
     ajax_getPlayerList().then(function(response) {
-        console.log("記得替換 Ajax");
-        console.log(response);
         if (response.message.successed) {
             players = response.playerList;
 

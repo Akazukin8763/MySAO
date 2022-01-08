@@ -75,10 +75,10 @@
             });
             import * as ability from "./js/ability/showGraph.js";
             function searchPlayer(searchName) {
+                $("#searchName").val("");
+
                 ajax.ajax_searchPlayer(searchName).then(function(response) {
                     if (response.message.successed) {
-                        $("#searchName").val("");
-
                         let playerInfo = response.playerInfo;
 
                         // Based
