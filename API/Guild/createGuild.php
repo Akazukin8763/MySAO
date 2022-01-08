@@ -6,6 +6,7 @@
     class Message{
         public $successed;
         public $statement;
+        public $have_guild = false;
         public $guild_name_illegal = false;
         public $guild_name_exist = false;
     }
@@ -29,6 +30,14 @@
         try {
             foreach($_POST as $key => $value) $$key = $value;
             
+            $sql = "SELECT guild_ID
+                    FROM player
+                    WHERE ID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(array($_SESSION['ID']));
+            $result = $stmt->fetchAll();
+            if($result[0][0] != NULL){ $message->have_guild = true; interrupt($message); }
+
             if (empty($guild_name)){ $message->guild_name_illegal = true; interrupt($message); }
             
             $sql = "SELECT COUNT(guild_name)

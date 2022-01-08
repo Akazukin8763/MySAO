@@ -60,7 +60,35 @@
             foreach($items as $item){
                 if (isset($$item)){
                     if($item == "levels" && empty($levels)) continue;   //沒填levels等同於沒給
-                    else if($item == "guild_ID" && $guild_ID == "") $guild_ID = NULL;    //沒填就設為NULL(不是真的SET"")，以離開公會
+                    else if($item == "guild_ID") {
+                        if($guild_ID == "") $guild_ID = NULL;    //沒填就設為NULL(不是真的SET"")，以離開公會
+
+                        $sql = "SELECT guild_ID
+                                FROM guild
+                                WHERE ID = ?";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->execute(array($_SESSION["ID"]));
+                        $result = $stmt->fetchAll();
+
+                        if(count($result)){   //如果是公會長就另外處理
+                            $dismiss_guild_ID = $result[0][0];
+
+                            $sql = "UPDATE player
+                                    SET guild_ID = case
+                                        when ID = ? then ?
+                                        else NULL
+                                    end
+                                    WHERE guild_ID = ?";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute(array($_SESSION["ID"], $guild_ID, $dismiss_guild_ID));
+
+                            $sql = "DELETE FROM guild
+                                    WHERE guild_ID = ?";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute(array($dismiss_guild_ID));
+                            continue;
+                        }
+                    }
                     $sql = "UPDATE player
                             SET $item = ?
                             WHERE ID = ?";

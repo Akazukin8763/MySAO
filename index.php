@@ -316,6 +316,22 @@
                     }
                 })
             })
+            
+            $("#_deleteAccount_btn").click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: "API/Player/deleteAccount.php",
+                    dataType: "json",
+                    data: {
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(jqXHR) {
+                        console.log(jqXHR);
+                    }
+                })
+            })
         </script>
     </head>
     <body>
@@ -373,7 +389,7 @@
         <input type="text" id="_guild_name" name="_guild_name">
         <button type="button" class="btn btn-primary" id="_updateGuildID_btn">Update</button><br><br>
         
-        <h1>Get Aincrad Table</h1>
+        <h1>Get Aincrad table</h1>
         <button type="button" class="btn btn-primary" id="_getAincrad_btn">Get</button><br><br>
         
         <h1>Get AincradDetail</h1>
@@ -381,22 +397,25 @@
         <input type="text" id="_level" name="_level">
         <button type="button" class="btn btn-primary" id="_getAincradDetail_btn">Get</button><br><br>
         
-        <h1>Get Guild Table</h1>
+        <h1>Get guild table</h1>
         <button type="button" class="btn btn-primary" id="_getGuild_btn">Get</button><br><br>
 
-        <h1>Get GuildDetail</h1>
+        <h1>Get guildDetail</h1>
         <label for="_guild_name2">guild_name: </label>
         <input type="text" id="_guild_name2" name="_guild_name2">
         <button type="button" class="btn btn-primary" id="_getGuildDetail_btn">Get</button><br><br>
         
-        <h1>Get PlayerList</h1>
+        <h1>Get playerList</h1>
         <label for="_orderBy">orderBy: </label>
         <input type="text" id="_orderBy" name="_orderBy">
         <button type="button" class="btn btn-primary" id="_getPlayerList_btn">Get</button><br><br>
         
-        <h1>Create Guild</h1>
+        <h1>Create guild</h1>
         <label for="_guild_name3">guild_name: </label>
         <input type="text" id="_guild_name3" name="_guild_name3">
         <button type="button" class="btn btn-primary" id="_createGuild_btn">Create</button><br><br>
+        
+        <h1>Delete account</h1>
+        <button type="button" class="btn btn-primary" id="_deleteAccount_btn">Delete</button><br><br>
     </body>
 </html>

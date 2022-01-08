@@ -1,9 +1,15 @@
 2022/1/8
 -----------------------
 
+完成公會連鎖更動機制
+
     新增API: getPlayerList
 
     新增API: createGuild
+
+    新增API: deleteAccount
+
+    修改API: updatePlayer
 
 2022/1/7
 -----------------------
