@@ -14,7 +14,7 @@
     $message = new Message();
     //ex: message.name_notExist 得知輸入是否有效
     $playerInfo = new Info();
-    //含有該 player的attribute 與 ability attribute
+    //含有該玩家的 player、ability、所在guild 的attribute
     //ex: playerInfo.attack
 
     function interrupt($msg){
