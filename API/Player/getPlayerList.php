@@ -28,11 +28,12 @@
             foreach($_POST as $key => $value) $$key = $value;
 
             if(empty($orderBy)) $orderBy = 'ID';
+            $power = ($orderBy == 'ID' ? 'ASC' : 'DESC');
 
         try{
             $sql = "SELECT ID, name
                     FROM player natural join ability
-                    ORDER BY $orderBy";
+                    ORDER BY $orderBy $power";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll();
