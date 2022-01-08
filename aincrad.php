@@ -1,3 +1,19 @@
+<?php
+    session_start();
+
+    if (isset($_SESSION["ID"])) {
+        $ID = $_SESSION["ID"];
+        $username = $_SESSION["username"];
+
+        setcookie("ID", $ID);
+        setcookie("username", $username);
+    }
+    else {
+        header('location: index.php');
+        exit;
+    }
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -71,11 +87,19 @@
         </style>
 
         <script type="module">
+            import { getCookie } from "./js/cookie.js";
+            import * as ajax from "./js/ajax.js";
+
+            let __ID = getCookie("ID");
+            let __name = getCookie("username");
+
             import { setModal } from "./js/aincrad/setModal.js";
             setModal();
 
             import { showAincrad } from "./js/aincrad/showAincrad.js";
             window.addEventListener("load", function(event) {
+                $("#currentUsername").html(__name);
+
                 var search, tag, index = 0;
 
                 try {
@@ -120,13 +144,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="guild.php">Guild</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="player.php">Player</a>
+                            </li>
                         </ul>
-                        <div class="input-group w-25">
-                            <input type="text" class="form-control" placeholder="username" required>
-                                <button type="button" class="btn btn-danger" id="search">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </input>
+                        <div class="justify-content-end" style="color: white;">
+                            <i class="bi bi-person-circle"></i>
+                            &zwnj;&zwnj;&zwnj;
+                            <span id="currentUsername"></span>
                         </div>
                     </div>
                 </div>

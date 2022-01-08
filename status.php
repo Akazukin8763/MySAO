@@ -133,7 +133,6 @@
                         let __guild_name = playerInfo.guild_name;
 
                         ajax.ajax_getGuildDetail(__guild_name).then(function(response) {
-                            console.log(response);
                             if (response.message.successed) {
                                 let detail = new Map();
 
@@ -154,7 +153,7 @@
                         });
                     }
                     else {
-                        //location.href = "main.php";
+                        location.href = "main.php";
                     }
                 }).catch(function(jqXHR) {
                     location.href = "main.php";
@@ -221,6 +220,7 @@
 
             // Window Load
             window.addEventListener("load", function(event) {
+                $("#currentUsername").html(__name);
                 $("#playerID").html("#" + __ID);
                 $("#playerName").html(__name);
 
@@ -260,21 +260,22 @@
                                 <a class="nav-link" href="main.php">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="status.php">Status</a>
+                                <a class="nav-link active" aria-current="page" href="status.php">Status</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="aincrad.php">Aincrad</a>
+                                <a class="nav-link" href="aincrad.php">Aincrad</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="guild.php">Guild</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="player.php">Player</a>
+                            </li>
                         </ul>
-                        <div class="input-group w-25">
-                            <input type="text" class="form-control" placeholder="username" required>
-                                <button type="button" class="btn btn-danger" id="search">
-                                    <i class="bi bi-search"></i>
-                                </button>
-                            </input>
+                        <div class="justify-content-end" style="color: white;">
+                            <i class="bi bi-person-circle"></i>
+                            &zwnj;&zwnj;&zwnj;
+                            <span id="currentUsername"></span>
                         </div>
                     </div>
                 </div>
