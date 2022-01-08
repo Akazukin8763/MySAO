@@ -178,12 +178,12 @@
                     <div class="modal-content modal-gradient">
                         <!-- Enemy Header -->
                         <div class="modal-header justify-content-center">
-                            <span class="modal-title" id="enemyHeaderTitle"></span>
+                            <span class="modal-title" id="guildTitle"></span>
                         </div>
                         <!-- Enemy Body -->
                         <div class="modal-body" id="enemyBody">
                             <h5>公會總人數：</h5>
-                            <div id="boss">
+                            <div id="info">
                                 <!-- Nothing -->
                             </div>
                             <div id="Chart">
@@ -191,10 +191,7 @@
                                     <!-- Nothing -->
                                 </canvas>
                             </div>
-                            <h5>Mobs</h5>
-                            <div id="mobs">
-                                
-                            </div>
+
                         </div>
                         <!-- Enemy Footer -->
                         <div class="modal-footer d-flex justify-content-start">
@@ -205,6 +202,31 @@
                 </div>
             </div>
            
+
+            <div class="modal fade" id="create" tabindex="-1" aria-labelledby="create" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content modal-gradient">
+                        <!-- Enemy Header -->
+                        <div class="modal-header justify-content-center">
+                            <span class="modal-title" id="createTitle">創建公會</span>
+                        </div>
+                        <!-- Enemy Body -->
+                        <div class="modal-body" id="createBody">
+                        <div>
+                            <label for="uploadTitle" class="form-label" required="required">Name：</label>
+                            <input type="text" class="form-control" id="uploadTitle" name="uploadTitle">
+                        </div>
+                            
+                        </div>
+                        <!-- Enemy Footer -->
+                        <div class="modal-footer d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-dark" id="create_guild">新建公會</button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
             <div>
                 <h1>&nbsp;</h1>
             </div>
@@ -212,8 +234,8 @@
                 <h1>&nbsp;</h1>
             </div>
             <div class="container d-flex">
-                <button type="button" class="fw-bold m-auto btn btn-outline-dark" style=" height: 30vh; width:50vh; background-image: url('src/image/Tier-S_Forest.png');font-size: 50px;" id="">創建公會</button>
-                <button type="button" class="fw-bold m-auto btn btn-outline-dark" style=" height: 30vh; width:50vh; background-image: url('src/image/Tier-S_Forest.png');font-size: 50px;" id="">退出公會</button>
+                <button type="button" class="fw-bold m-auto btn btn-outline-dark" style=" height: 30vh; width:50vh; background-image: url('src/image/Tier-S_Forest.png');font-size: 50px;" id="buildGuild">創建公會</button>
+                <button type="button" class="fw-bold m-auto btn btn-outline-dark" style=" height: 30vh; width:50vh; background-image: url('src/image/Tier-S_Forest.png');font-size: 50px;" id="quit">退出公會</button>
             </div>
 
         </div>  

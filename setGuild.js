@@ -36,6 +36,47 @@ export function showGuild(index = 0) {
 
             
 
+
+            var quit = $("#quit");
+            quit.click(function() {     
+                var yes=window.confirm("你確定嗎?");
+                if(yes){
+                    ajax_quitGuild(my_guildName).then(function(response) {
+                        if (response.message.successed) {
+                            window.alert("成功退出公會");
+                            location.href="Guild.php";
+                        }
+                    }).catch(function(jqXHR) { 
+                        console.log(jqXHR);
+                    });    
+                } 
+            });
+
+
+            var create = $("#buildGuild");
+            create.click(function() {     
+                $("#create").modal("show");
+                $(".carousel").carousel("pause");
+            });
+
+            var newGuild = $("#create_guild");
+
+            newGuild.click(function() {
+                var newName =  $("#uploadTitle").val();
+                console.log(newName);
+                ajax_createGuild(newName).then(function(response) {
+                    if (response.message.successed) {
+                        $("#create").modal("hide");
+                        window.alert("成功新建公會");
+                        location.href="Guild.php";
+                    }
+                }).catch(function(jqXHR) { 
+                    console.log(jqXHR);
+                });
+            });
+
+
+
             // Inner
             var inner = $("#innerGuild");
             inner.empty();
@@ -82,6 +123,9 @@ export function showGuild(index = 0) {
                     card.appendTo(col);
                     col.appendTo(innerAll[Math.floor(j / 2)]);
                     let guildsNumber = 1;
+
+                    
+
                     card.click(function() {     
                        
                         //每次生成圖表前要先破壞前有的
@@ -120,91 +164,33 @@ export function showGuild(index = 0) {
                                 $("#dateDescription").html(guild_establishment);
 
                                 //其他資訊
-                                $("#enemyHeaderTitle").html("SAO公會：" + (i * 2 + j + 1) + "｜Other Description");
+                                $("#guildTitle").html("SAO公會：" + (i * 2 + j + 1) + "｜Other Description");
 
                                 /*
                                 Enemy
                                 */
-                                var boss = $("#boss");
-                                boss.empty();
+                                var info = $("#info");
+                                info.empty();
 
 
                                 var chart = $('<canvas"></canvas>');
                                 var title = $('<div class="d-flex justify-content-between align-items-center"></div>')
                                 var description = $('<p></p>');
                                 
-                                title.appendTo(boss);
+                                title.appendTo(info);
 
-                                // Name
-                                var name = $('<span style="font-weight: bold">' + guildsNumber + '人</span>')
-                                var details = $('<span class="detail bi bi-clipboard-data"></span>')
+                                // people
+                                var people = $('<span style="font-weight: bold">' + guildsNumber + '人</span>')
+                                
+                                people.appendTo(title);
 
-                                var flag = false;
-                                details.click(function() {
-                                    if (flag) chart.css({ "display": "none" });
-                                    else chart.css({ "display": "block" });
-                                    flag = !flag;
-                                });
-
-                                name.appendTo(title);
-                                details.appendTo(title);
-
-                                // Desciption
-                                description.html("金牛族能連續使出產生麻痹效果的劍技「麻痹衝擊」和「麻痹爆破」。");
                             }
                         }).catch(function(jqXHR) { // 錯誤則只顯示自己
                             console.log(jqXHR);
                         });
 
 
-                        $("#description").modal("show");
-                        $(".carousel").carousel("pause");
-
-                        // Level
-                        $("#descriptionHeaderTitle").html("SAO公會｜Description");
-                        $("#guildName").html("公會名稱：");
-                        $("#mainDescription").html(guild_name);
-                        $("#guildPerson").html("創建人：");
-                        $("#personDescription").html(guild_person);
-                        $("#date").html("創建日期：");
-                        $("#dateDescription").html(guild_establishment);
-
-                        //其他資訊
-                        $("#enemyHeaderTitle").html("SAO公會：" + (i * 2 + j + 1) + "｜Other Description");
-
-                        /*
-                        Enemy
-                        */
-                        var boss = $("#boss");
-                        boss.empty();
-
-                        var mobs = $("#mobs");
-                        mobs.empty();
-
-                        //for (let i = 0; i < 1; i++) {}
-
-                        var chart = $('<canvas"></canvas>');
-                        var title = $('<div class="d-flex justify-content-between align-items-center"></div>')
-                        var description = $('<p></p>');
-                        
-                        title.appendTo(boss);
-
-                        // Name
-                        var name = $('<span style="font-weight: bold">' + guildsNumber + '人</span>')
-                        var details = $('<span class="detail bi bi-clipboard-data"></span>')
-
-                        var flag = false;
-                        details.click(function() {
-                            if (flag) chart.css({ "display": "none" });
-                            else chart.css({ "display": "block" });
-                            flag = !flag;
-                        });
-
-                        name.appendTo(title);
-                        details.appendTo(title);
-
-                        // Desciption
-                        description.html("金牛族能連續使出產生麻痹效果的劍技「麻痹衝擊」和「麻痹爆破」。");
+                       
                     });
                 }
 
@@ -227,24 +213,6 @@ function ajax_getGuildALL() {
             url: "API/Guild/getAll.php",
             dataType: "json",
             data: {
-            },
-            success: function(response) {
-                resolve(response)
-            },
-            error: function(jqXHR) {
-                reject(jqXHR)
-            }
-        })
-    });
-}
-function ajax_searchPlayer(__name) {
-    return new Promise(function(resolve, reject) {
-        $.ajax({
-            type: "POST",
-            url: "API/Player/searchPlayer.php",
-            dataType: "json",
-            data: {
-                name: __name
             },
             success: function(response) {
                 resolve(response)
@@ -278,6 +246,44 @@ function ajax_getGuildDetail(__guild_name) {
         $.ajax({
             type: "POST",
             url: "API/Guild/getGuildDetail.php",
+            dataType: "json",
+            data: {
+                guild_name: __guild_name
+            },
+            success: function(response) {
+                resolve(response)
+            },
+            error: function(jqXHR) {
+                reject(jqXHR)
+            }
+        })
+    });
+}
+
+function ajax_createGuild(__guild_name) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: "API/Guild/createGuild.php",
+            dataType: "json",
+            data: {
+                guild_name: __guild_name
+            },
+            success: function(response) {
+                resolve(response)
+            },
+            error: function(jqXHR) {
+                reject(jqXHR)
+            }
+        })
+    });
+}
+
+function ajax_quitGuild(__guild_name) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: "API/Player/updatePlayer.php",
             dataType: "json",
             data: {
                 guild_name: __guild_name
