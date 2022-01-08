@@ -47,6 +47,13 @@
             .card-header {
                 color: white;
             }
+
+            .list-group-item {
+                background: linear-gradient(270deg, rgba(16, 46, 102, 0.9)0%, rgba(135, 220, 233, 0.8)100%);
+            }
+            .list-group-item:hover {
+                transform: scale(1.02);
+            }
         </style>
 
         <script type="module">
@@ -126,9 +133,15 @@
                 }
             }
 
+            // Search List
+            $("#selfData").click(function() {
+                searchPlayer(__name);
+            });
+
             // Window Load
             window.addEventListener("load", function(event) {
                 $("#currentUsername").html(__name);
+                $("#selfData").html("#" + __ID + "　｜　" + __name)
 
                 $("#abilityChart").empty();
                 let chart = $("<canvas></canvas>").appendTo($("#abilityChart"));
@@ -191,11 +204,60 @@
                 <br>
                 <div class="row">
                     <div class="col-sm-8">
-                        
+                        <div class="" style="height: 72vh">
+                            <ul class="list-group">
+                                <li class="list-group-item" id="selfData"></li>
+
+                                <hr>
+
+                                <div class="row" id="allPlayer">
+                                    <div class="col-sm-6">
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                        <li class="list-group-item">An item</li><br>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+
+                        <div style="height: 1vh"></div>
+
+                        <div style="height: 4vh">
+                            <nav class="d-flex justify-content-center">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
 
                     <div class="col-sm-4">
-                        <div class="card header-gradient" style="height: 80vh">
+                        <div class="card header-gradient" style="height: 78vh">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span id="playerID">#CR000000</span>
