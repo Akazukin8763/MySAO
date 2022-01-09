@@ -148,6 +148,7 @@ export function showGuild(index = 0) {
 
                         ajax_getGuildDetail(guild_name).then(function(response) {
                             if (response.message.successed) {
+                                guildsNumber = 0;
                                 console.log(response.memberDistribution);
                                 let detail = new Map();
 
