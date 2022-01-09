@@ -45,6 +45,7 @@
 
             .card {
                 background-image: url('src/image/Aincrad.png');
+                border:0;
                 background-repeat: no-repeat;
                 background-size: cover;
                 transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
