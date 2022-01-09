@@ -74,6 +74,14 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
+
+            #logout {
+                opacity: 0%;
+            }
+            #logout:hover {
+                transition: .5s;
+                opacity: 100%;
+            }
         </style>
 
         <script type="module">
@@ -82,6 +90,22 @@
 
             let __ID = getCookie("ID");
             let __name = getCookie("username");
+
+            // Logout
+            $("#logout").click(function() {
+                let confirm = window.confirm("Once you logout, you will die.");
+
+                if (confirm) {
+                    ajax.ajax_deleteAccount().then(function(response) {
+                        if (response.message.successed)
+                            location.href = "index.php";
+                        else
+                            alert("You can not logout!");
+                    }).catch(function(jqXHR) {
+                        alert("You can not logout!");
+                    });
+                }
+            });
 
             // Window Load
             window.addEventListener("load", function(event) {
@@ -138,9 +162,9 @@
                 <br>
                 <div class="row">
                     <div class="col-sm-6-13">
-                        <div class="card" style="height: 34vh">
+                        <div class="card" style="height: 30vh">
                             <div class="card-image" onclick="location.href='status.php'">
-                                <img src="src/image/Main-Status.png" class="card-img-top" style="height: 33.7vh;">
+                                <img src="src/image/Main-Status.png" class="card-img-top" style="height: 29.7vh;">
                                 <div>
                                     <h2>Status</h2>
                                 </div>
@@ -149,9 +173,9 @@
 
                         <div style="height: 8vh"></div>
 
-                        <div class="card" style="height: 34vh">
+                        <div class="card" style="height: 30vh">
                             <div class="card-image" onclick="location.href='guild.php'">
-                                <img src="src/image/Main-Guild.png" class="card-img-top" style="height: 33.7vh;">
+                                <img src="src/image/Main-Guild.png" class="card-img-top" style="height: 29.7vh;">
                                 <div>
                                     <h2>Guild</h2>
                                 </div>
@@ -162,9 +186,9 @@
                     <div class="col-sm-1-13"></div>
 
                     <div class="col-sm-6-13">
-                        <div class="card" style="height: 34vh">
+                        <div class="card" style="height: 30vh">
                             <div class="card-image" onclick="location.href='aincrad.php'">
-                                <img src="src/image/Main-Aincrad.png" class="card-img-top" style="height: 33.7vh;">
+                                <img src="src/image/Main-Aincrad.png" class="card-img-top" style="height: 29.7vh;">
                                 <div>
                                     <h2>Aincrad</h2>
                                 </div>
@@ -173,15 +197,22 @@
 
                         <div style="height: 8vh"></div>
 
-                        <div class="card" style="height: 34vh">
+                        <div class="card" style="height: 30vh">
                             <div class="card-image" onclick="location.href='player.php'">
-                                <img src="src/image/Main-Player.png" class="card-img-top" style="height: 33.7vh;">
+                                <img src="src/image/Main-Player.png" class="card-img-top" style="height: 29.7vh;">
                                 <div>
                                     <h2>Player</h2>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <br>
+                <div class="d-flex justify-content-center">
+                    <span class="btn btn-danger w-25" type="button" id="logout">
+                        <i class="bi bi-box-arrow-right"></i>&nbsp;&nbsp;&nbsp;L o g o u t
+                    </span>
                 </div>
             </div>
 
