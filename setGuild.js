@@ -51,7 +51,7 @@ export function showGuild(index = 0) {
             quit.click(function() {     
                 var yes=window.confirm("Are you sure you want to quit the guild?");
                 if(yes){
-                    ajax_quitGuild().then(function(response) {
+                    ajax_quitGuild("").then(function(response) {
                         if (response.message.successed) {
                             window.alert("success");
                             location.href="Guild.php";
@@ -138,7 +138,7 @@ export function showGuild(index = 0) {
                     cardBody.appendTo(card);
                     card.appendTo(col);
                     col.appendTo(innerAll[Math.floor(j / 2)]);
-                    let guildsNumber = 1;
+                    let guildsNumber = 0;
                     
                     card.click(function() {     
                        
@@ -148,13 +148,14 @@ export function showGuild(index = 0) {
 
                         ajax_getGuildDetail(guild_name).then(function(response) {
                             if (response.message.successed) {
+                                console.log(response.memberDistribution);
                                 let detail = new Map();
 
                                 response.memberDistribution.forEach(function(element) {
                                     detail.set(element.lv, element.num);
+                                    guildsNumber+=element.num;
                                 });
 
-                                guildsNumber = detail.size;
                                 guild.showGraph($("#guildChart"), [...detail.keys()], [...detail.values()]);
 
                                 $("#description").modal("show");
@@ -192,7 +193,8 @@ export function showGuild(index = 0) {
                                     if(yes){
                                         ajax_joinGuild(guild_name).then(function(response) {
                                             if (response.message.successed) {
-                                                window.alert("success")
+                                                window.alert("success");
+                                                location.href="Guild.php";
                                             }
                                         }).catch(function(jqXHR) { 
                                             console.log(jqXHR);
@@ -277,13 +279,14 @@ function ajax_createGuild(__guild_name) {
     });
 }
 
-function ajax_quitGuild() {
+function ajax_quitGuild(__guild_name) {
     return new Promise(function(resolve, reject) {
         $.ajax({
             type: "POST",
             url: "API/Player/updatePlayer.php",
             dataType: "json",
             data: {
+                guild_name: __guild_name
             },
             success: function(response) {
                 resolve(response)
