@@ -13,7 +13,7 @@
     $message = new Message();
     //ex: message.successed 得知是否完全成功
     $guildsInfo;
-    //ex: guildsInfo[0].guild_name
+    //ex: guildsInfo[0].guild_name ; guildsInfo[0].leader
 
     function interrupt($msg){
         $msg->successed = false;
@@ -22,11 +22,11 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        try{
+        //try{
             //foreach($_POST as $key => $value) $$key = $value;
 
-            $sql = "SELECT *
-                    FROM guild";
+            $sql = "SELECT G.*, name as leader
+                    FROM guild as G left outer join player using(ID)";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll();
@@ -39,8 +39,8 @@
             }
             $message->successed = true;
             echo json_encode(array('message' => $message, 'guildsInfo' => $guildsInfo));
-        }
-        catch (Exception $e) { $message->statement = $e->getMessage(); interrupt($message); }
+        //}
+        //catch (Exception $e) { $message->statement = $e->getMessage(); interrupt($message); }
     }
     else {
         $message->statement = '請求無效，只允許 POST 方式訪問！';
