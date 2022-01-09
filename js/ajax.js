@@ -168,6 +168,26 @@ export function ajax_getDescription() {
     });
 }
 
+// getAincradDetail
+export function ajax_getAincradDetail(__level) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: "API/Aincrad/getAincradDetail.php",
+            dataType: "json",
+            data: {
+                levels: __level
+            },
+            success: function(response) {
+                resolve(response)
+            },
+            error: function(jqXHR) {
+                reject(jqXHR)
+            }
+        });
+    });
+}
+
 /**
  * Guild
  */
