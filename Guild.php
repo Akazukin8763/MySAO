@@ -44,6 +44,7 @@
             }
 
             .card {
+
                 background-image: url('src/image/Aincrad.png');
                 border:0;
                 background-repeat: no-repeat;
@@ -89,6 +90,15 @@
 
             .detail:hover {
                 transform: scale(1.3);
+            }
+
+            #buildGuild:hover{
+                transform: scale(1.05);
+                box-shadow: 0 10px 20px rgba(0,0,0,.06), 0 4px 8px rgba(0,0,0,.12);
+            }
+            #quit:hover{
+                transform: scale(1.05);
+                box-shadow: 0 10px 20px rgba(0,0,0,.06), 0 4px 8px rgba(0,0,0,.12);
             }
         </style>
         <script type="module">
@@ -203,7 +213,7 @@
                         </div>
                         <!-- Detail Body -->
                         <div class="modal-body" id="enemyBody">
-                            <h5>The total number of the guild:</h5>
+                            
                             <div id="info">
                                 <!-- Nothing -->
                             </div>
