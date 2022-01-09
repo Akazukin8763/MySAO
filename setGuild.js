@@ -54,7 +54,7 @@ export function showGuild(index = 0) {
                     ajax_quitGuild("").then(function(response) {
                         if (response.message.successed) {
                             window.alert("success");
-                            location.href="Guild.php";
+                            location.href="guild.php";
                         }
                     }).catch(function(jqXHR) { 
                         console.log(jqXHR);
@@ -78,7 +78,7 @@ export function showGuild(index = 0) {
                     if (response.message.successed) {
                         $("#create").modal("hide");
                         window.alert("Successfully created a new guild");
-                        location.href="Guild.php";
+                        location.href="guild.php";
                     }
                 }).catch(function(jqXHR) { 
                     console.log(jqXHR);
@@ -132,9 +132,10 @@ export function showGuild(index = 0) {
                     $('<h2 class="fw-bold">' + guild_name +'</h2>').appendTo(cardBody);
                     $('<ul class="d-flex mt-auto">').appendTo(cardBody);
                     $('<li class="me-auto" style="list-style-type: none;"></li><br><br>').appendTo(cardBody);
-                    $('<br><li class="d-flex align-items-center me-3"><small><img src="src/image/level74.gif"width="32" height="32" class="rounded-circle border border-white"> '+guild_person+'</small></li>').appendTo(cardBody);
-                    $('<li class="me-auto" style="list-style-type: none;"><small>'+guild_establishment+'</small></li>').appendTo(cardBody);
-
+                    $('<br>').appendTo(cardBody);
+                    $('<li class="d-flex align-items-center me-3" style="text-shadow: 0 0 5px black;"><small>'+guild_person+' <img src="src/image/level74.gif"width="32" height="32" class="rounded-circle border border-white"></small></li>').appendTo(cardBody);
+                    $('<li class="d-flex align-items-center me-3" style="list-style-type: none;text-shadow: 0 0 5px black;"><small>'+guild_establishment+'</small></li>').appendTo(cardBody);
+                    
                     cardBody.appendTo(card);
                     card.appendTo(col);
                     col.appendTo(innerAll[Math.floor(j / 2)]);
@@ -171,7 +172,7 @@ export function showGuild(index = 0) {
                                 $("#dateDescription").html(guild_establishment);
 
                                 //其他資訊
-                                $("#guildTitle").html("SAO Guild：｜Other Description");
+                                $("#guildTitle").html("SAO Guild｜Other Description");
 
                                 var info = $("#info");
                                 info.empty();
@@ -194,7 +195,7 @@ export function showGuild(index = 0) {
                                         ajax_joinGuild(guild_name).then(function(response) {
                                             if (response.message.successed) {
                                                 window.alert("success");
-                                                location.href="Guild.php";
+                                                location.href="guild.php";
                                             }
                                         }).catch(function(jqXHR) { 
                                             console.log(jqXHR);
