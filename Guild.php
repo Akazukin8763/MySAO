@@ -44,9 +44,29 @@
             }
 
             .card {
-                background-image: url('src/image/Tier-S_Forest.png');
+                background-image: url('src/image/Aincrad.png');
+                background-repeat: no-repeat;
+                background-size: cover;
                 transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
                 cursor: pointer;
+            }
+            .cat{
+                background-image: url('src/image/Black_Cats.png');
+            }
+            .KOB{
+                background-image: url('src/image/KOB_members.png');
+            }
+            .L_C{
+                background-image: url('src/image/Laughing_coffin.png');
+            }
+            .ALF{
+                background-image: url('src/image/ALF.png');
+            }
+            .APPLE{
+                background-image: url('src/image/Golden_Apple.png');
+            }
+            .FIRE{
+                background-image: url('src/image/Fuurinkazan.png');
             }
             .card:hover {
                 transform: scale(1.05);
@@ -164,7 +184,7 @@
                         </div>
                         <!-- Description Footer -->
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark" id="join ">加入公會</button>
+                            <button type="button" class="btn btn-outline-dark" id="join">加入公會</button>
                             <button type="button" class="btn btn-outline-dark" id="description-enemy">其他資訊 &gt;</button>
                         </div>
                     </div>
@@ -172,17 +192,17 @@
             </div>
 
 
-            <!-- Modal Enemy -->
+            <!-- Modal Detail -->
             <div class="modal fade" id="enemy" tabindex="-1" aria-labelledby="enemy" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content modal-gradient">
-                        <!-- Enemy Header -->
+                        <!-- Detail Header -->
                         <div class="modal-header justify-content-center">
                             <span class="modal-title" id="guildTitle"></span>
                         </div>
-                        <!-- Enemy Body -->
+                        <!-- Detail Body -->
                         <div class="modal-body" id="enemyBody">
-                            <h5>公會總人數：</h5>
+                            <h5>The total number of the guild:</h5>
                             <div id="info">
                                 <!-- Nothing -->
                             </div>
@@ -193,7 +213,7 @@
                             </div>
 
                         </div>
-                        <!-- Enemy Footer -->
+                        <!-- Detail Footer -->
                         <div class="modal-footer d-flex justify-content-start">
                             <button type="button" class="btn btn-outline-dark" id="enemy-description">&lt; 詳細資料</button>
                         </div>
@@ -202,15 +222,15 @@
                 </div>
             </div>
            
-
+             <!-- Modal BuildGuild -->
             <div class="modal fade" id="create" tabindex="-1" aria-labelledby="create" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content modal-gradient">
-                        <!-- Enemy Header -->
+
                         <div class="modal-header justify-content-center">
-                            <span class="modal-title" id="createTitle">創建公會</span>
+                            <span class="modal-title" id="createTitle">Create a guild</span>
                         </div>
-                        <!-- Enemy Body -->
+
                         <div class="modal-body" id="createBody">
                         <div>
                             <label for="uploadTitle" class="form-label" required="required">Name：</label>
@@ -218,9 +238,9 @@
                         </div>
                             
                         </div>
-                        <!-- Enemy Footer -->
+ 
                         <div class="modal-footer d-flex justify-content-end">
-                            <button type="button" class="btn btn-outline-dark" id="create_guild">新建公會</button>
+                            <button type="button" class="btn btn-outline-dark" id="create_guild">Create</button>
                         </div>
                         
                     </div>
@@ -234,8 +254,8 @@
                 <h1>&nbsp;</h1>
             </div>
             <div class="container d-flex">
-                <button type="button" class="fw-bold m-auto btn btn-outline-dark" style=" height: 30vh; width:50vh; background-image: url('src/image/Tier-S_Forest.png');font-size: 50px;" id="buildGuild">創建公會</button>
-                <button type="button" class="fw-bold m-auto btn btn-outline-dark" style=" height: 30vh; width:50vh; background-image: url('src/image/Tier-S_Forest.png');font-size: 50px;" id="quit">退出公會</button>
+                <button type="button" class="fw-bold m-auto btn btn-outline-dark" style=" height: 30vh; width:50vh; background-image: url('src/image/new_guild.png');font-size: 50px;background-repeat: no-repeat;background-position: center;background-size: cover;" id="buildGuild">創建公會</button>
+                <button type="button" class="fw-bold m-auto btn btn-outline-dark" style=" height: 30vh; width:50vh; background-image: url('src/image/leaveGuild.png');font-size: 50px;background-repeat: no-repeat;background-position: center;background-size: cover;" id="quit">退出公會</button>
             </div>
 
         </div>  

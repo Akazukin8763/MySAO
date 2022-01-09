@@ -1,14 +1,24 @@
 import * as guild from "./js/guild/showGraph.js";
+import { getCookie } from "./js/cookie.js";
 export function showGuild(index = 0) {
     let noName = "[No Name]";
     let noDescription = "...";
     let allPlayer;
     let guild_person;
-    ajax_getPlayerList().then(function(response) {
+    let __ID = getCookie("ID");
+    let __name = getCookie("username");
+
+    ajax_searchPlayer(__name).then(function(response) {
         if (response.message.successed) {
-           //console.log(response);
-           allPlayer = response.playerList;
-           console.log(allPlayer);
+            let Player = response.playerInfo;
+            console.log(Player);
+            if(Player.guild_name!=null){
+                console.log(Player.guild_name);
+                $("#buildGuild").attr("disabled", true);
+            }
+            else{
+                $("#quit").attr("disabled", true);
+            }
         }
         else
             return;
@@ -39,11 +49,11 @@ export function showGuild(index = 0) {
 
             var quit = $("#quit");
             quit.click(function() {     
-                var yes=window.confirm("你確定嗎?");
+                var yes=window.confirm("Are you sure you want to quit the guild?");
                 if(yes){
-                    ajax_quitGuild(my_guildName).then(function(response) {
+                    ajax_quitGuild().then(function(response) {
                         if (response.message.successed) {
-                            window.alert("成功退出公會");
+                            window.alert("success");
                             location.href="Guild.php";
                         }
                     }).catch(function(jqXHR) { 
@@ -67,7 +77,7 @@ export function showGuild(index = 0) {
                 ajax_createGuild(newName).then(function(response) {
                     if (response.message.successed) {
                         $("#create").modal("hide");
-                        window.alert("成功新建公會");
+                        window.alert("Successfully created a new guild");
                         location.href="Guild.php";
                     }
                 }).catch(function(jqXHR) { 
@@ -98,18 +108,24 @@ export function showGuild(index = 0) {
                     let guildInfo = guildsInfo[i * 2 + j];
                     let guild_name = guildInfo.guild_name;
                     let guild_establishment = guildInfo.establishment;
+                    let guild_person = guildInfo.leader;
+
+                    var col = $('<div class="col-md-5" style="width:50%;"></div>');
+                    if(guild_name=="月夜黑貓團")
+                        var card = $('<div class="cat card card-cover h-100 overflow-hidden shadow-lg rounded-5"></div>');
+                    else if(guild_name=="血盟騎士團")
+                        var card = $('<div class="KOB card card-cover h-100 overflow-hidden shadow-lg rounded-5"></div>');
+                    else if(guild_name=="微笑棺木")
+                        var card = $('<div class="L_C card card-cover h-100 overflow-hidden shadow-lg rounded-5"></div>');
+                    else if(guild_name=="艾恩葛朗特解放軍")
+                        var card = $('<div class="ALF card card-cover h-100 overflow-hidden shadow-lg rounded-5"></div>');
+                    else if(guild_name=="黃金蘋果")
+                        var card = $('<div class="APPLE card card-cover h-100 overflow-hidden shadow-lg rounded-5"></div>');
+                    else if(guild_name=="風林火山")
+                        var card = $('<div class="FIRE card card-cover h-100 overflow-hidden shadow-lg rounded-5"></div>');
+                    else
+                        var card = $('<div class="card card-cover h-100 overflow-hidden shadow-lg rounded-5"></div>');
                     
-
-                    for(var k=0;k<allPlayer.length;k++){
-                        if(guildInfo.ID == allPlayer[k].ID){
-                            guild_person = allPlayer[k].name;
-                            break;
-                        }
-
-                    }
-
-                    var col = $('<div class="col-md"></div>');
-                    var card = $('<div class="card card-cover h-100 overflow-hidden shadow-lg rounded-5"></div>');
                     var cardBody = $('<div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1"></div>');
 
                     // Body
@@ -123,22 +139,13 @@ export function showGuild(index = 0) {
                     card.appendTo(col);
                     col.appendTo(innerAll[Math.floor(j / 2)]);
                     let guildsNumber = 1;
-
                     
-
                     card.click(function() {     
                        
                         //每次生成圖表前要先破壞前有的
                         $("#guildChart").remove();  
                         $("#Chart").append('<canvas id="guildChart"></canvas>');
 
-
-                        for(var k=0;k<allPlayer.length;k++){
-                            if(guildInfo.ID == allPlayer[k].ID){
-                                guild_person = allPlayer[k].name;
-                                break;
-                            }
-                        }
                         ajax_getGuildDetail(guild_name).then(function(response) {
                             if (response.message.successed) {
                                 let detail = new Map();
@@ -146,46 +153,54 @@ export function showGuild(index = 0) {
                                 response.memberDistribution.forEach(function(element) {
                                     detail.set(element.lv, element.num);
                                 });
-                                //console.log(detail);
+
                                 guildsNumber = detail.size;
-                                //console.log(guildsNumber);
                                 guild.showGraph($("#guildChart"), [...detail.keys()], [...detail.values()]);
 
                                 $("#description").modal("show");
                                 $(".carousel").carousel("pause");
 
-                                // Level
-                                $("#descriptionHeaderTitle").html("SAO公會｜Description");
-                                $("#guildName").html("公會名稱：");
+                                // 資訊
+                                $("#descriptionHeaderTitle").html("SAO Guild｜Description");
+                                $("#guildName").html("Guild Name：");
                                 $("#mainDescription").html(guild_name);
-                                $("#guildPerson").html("創建人：");
+                                $("#guildPerson").html("Founder：");
                                 $("#personDescription").html(guild_person);
-                                $("#date").html("創建日期：");
+                                $("#date").html("Date created：");
                                 $("#dateDescription").html(guild_establishment);
 
                                 //其他資訊
-                                $("#guildTitle").html("SAO公會：" + (i * 2 + j + 1) + "｜Other Description");
+                                $("#guildTitle").html("SAO Guild：｜Other Description");
 
-                                /*
-                                Enemy
-                                */
                                 var info = $("#info");
                                 info.empty();
 
 
-                                var chart = $('<canvas"></canvas>');
                                 var title = $('<div class="d-flex justify-content-between align-items-center"></div>')
-                                var description = $('<p></p>');
                                 
                                 title.appendTo(info);
 
                                 // people
-                                var people = $('<span style="font-weight: bold">' + guildsNumber + '人</span>')
+                                var people = $('<span style="font-weight: bold">There is '+guildsNumber+' member(s) in the guild.</span>')
                                 
                                 people.appendTo(title);
 
+                                var join=$("#join");
+                                join.click(function() {     
+                                    var yes=window.confirm("Are you sure you want to join this guild?");
+
+                                    if(yes){
+                                        ajax_joinGuild(guild_name).then(function(response) {
+                                            if (response.message.successed) {
+                                                window.alert("success")
+                                            }
+                                        }).catch(function(jqXHR) { 
+                                            console.log(jqXHR);
+                                        });
+                                    }
+                                });
                             }
-                        }).catch(function(jqXHR) { // 錯誤則只顯示自己
+                        }).catch(function(jqXHR) { 
                             console.log(jqXHR);
                         });
 
@@ -224,23 +239,6 @@ function ajax_getGuildALL() {
     });
 }
 
-function ajax_getPlayerList() {
-    return new Promise(function(resolve, reject) {
-        $.ajax({
-            type: "POST",
-            url: "API/Player/getPlayerList.php",
-            dataType: "json",
-            data: {
-            },
-            success: function(response) {
-                resolve(response)
-            },
-            error: function(jqXHR) {
-                reject(jqXHR)
-            }
-        })
-    });
-}
 function ajax_getGuildDetail(__guild_name) {
     return new Promise(function(resolve, reject) {
         $.ajax({
@@ -279,7 +277,25 @@ function ajax_createGuild(__guild_name) {
     });
 }
 
-function ajax_quitGuild(__guild_name) {
+function ajax_quitGuild() {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: "API/Player/updatePlayer.php",
+            dataType: "json",
+            data: {
+            },
+            success: function(response) {
+                resolve(response)
+            },
+            error: function(jqXHR) {
+                reject(jqXHR)
+            }
+        })
+    });
+}
+
+function ajax_joinGuild(__guild_name) {
     return new Promise(function(resolve, reject) {
         $.ajax({
             type: "POST",
@@ -287,6 +303,25 @@ function ajax_quitGuild(__guild_name) {
             dataType: "json",
             data: {
                 guild_name: __guild_name
+            },
+            success: function(response) {
+                resolve(response)
+            },
+            error: function(jqXHR) {
+                reject(jqXHR)
+            }
+        })
+    });
+}
+
+function ajax_searchPlayer(__name) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: "API/Player/searchPlayer.php",
+            dataType: "json",
+            data: {
+                name: __name
             },
             success: function(response) {
                 resolve(response)
