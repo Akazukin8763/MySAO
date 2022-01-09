@@ -47,6 +47,25 @@ export function ajax_registerPlayer(__name, __attack, __health, __defense, __rea
     });
 }
 
+// deleteAccount
+export function ajax_deleteAccount() {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: "API/Player/deleteAccount.php",
+            dataType: "json",
+            data: {
+            },
+            success: function(response) {
+                resolve(response)
+            },
+            error: function(jqXHR) {
+                reject(jqXHR)
+            }
+        })
+    });
+}
+
 // showAllPlayer
 export function ajax_getPlayerList() {
     return new Promise(function(resolve, reject) {
