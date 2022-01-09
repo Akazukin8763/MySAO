@@ -22,7 +22,7 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        //try{
+        try{
             //foreach($_POST as $key => $value) $$key = $value;
 
             $sql = "SELECT G.*, name as leader
@@ -39,8 +39,8 @@
             }
             $message->successed = true;
             echo json_encode(array('message' => $message, 'guildsInfo' => $guildsInfo));
-        //}
-        //catch (Exception $e) { $message->statement = $e->getMessage(); interrupt($message); }
+        }
+        catch (Exception $e) { $message->statement = $e->getMessage(); interrupt($message); }
     }
     else {
         $message->statement = '請求無效，只允許 POST 方式訪問！';
