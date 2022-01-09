@@ -129,12 +129,11 @@ export function showGuild(index = 0) {
                     var cardBody = $('<div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1"></div>');
 
                     // Body
-                    $('<h2 class="fw-bold">' + guild_name +'</h2>').appendTo(cardBody);
+                    $('<h2 class="fw-bold" style="text-shadow: 0 0 15px black;">' + guild_name +'</h2>').appendTo(cardBody);
                     $('<ul class="d-flex mt-auto">').appendTo(cardBody);
                     $('<li class="me-auto" style="list-style-type: none;"></li><br><br>').appendTo(cardBody);
-                    $('<br>').appendTo(cardBody);
-                    $('<li class="d-flex align-items-center me-3" style="text-shadow: 0 0 5px black;"><small>'+guild_person+' <img src="src/image/level74.gif"width="32" height="32" class="rounded-circle border border-white"></small></li>').appendTo(cardBody);
-                    $('<li class="d-flex align-items-center me-3" style="list-style-type: none;text-shadow: 0 0 5px black;"><small>'+guild_establishment+'</small></li>').appendTo(cardBody);
+                    $('<br><br>').appendTo(cardBody);
+                    $('<li class="d-flex align-items-center me-3 justify-content-around fw-bold" style="text-shadow: 0 0 15px black;"><small><img src="src/image/level74.gif"width="32" height="32" class="rounded-circle border border-white"> '+guild_person+'</small><h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   </h1><small>'+guild_establishment+'</small></li>').appendTo(cardBody);
                     
                     cardBody.appendTo(card);
                     card.appendTo(col);
